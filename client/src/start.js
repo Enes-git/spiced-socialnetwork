@@ -1,7 +1,13 @@
 import ReactDOM from "react-dom";
+import Welcome from "./welcome";
 
-ReactDOM.render(<HelloWorld />, document.querySelector("main"));
+// it is React's job to read the url and based on that render the right component
 
-function HelloWorld() {
-    return <div>Hello, World!</div>;
+let elem;
+if (location.pathname === "/welcome") {
+    elem = <Welcome />;
+} else {
+    elem = <p>my main page of website</p>;
 }
+
+ReactDOM.render(elem, document.querySelector("main"));
