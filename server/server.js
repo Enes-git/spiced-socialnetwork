@@ -4,7 +4,10 @@ const compression = require("compression");
 const path = require("path");
 const { hash } = require("../server/utils/bc");
 const cookieSession = require("cookie-session");
+const db = require("./db");
+const { urlencoded } = require("express");
 
+// ==== MIDDLEWARES ======
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -17,9 +20,13 @@ app.use(
     })
 );
 
+// defining req.body
+app.use(express.urlencoded({ extended: false }));
+
 // securing the communication
 app.use(express.json());
 
+// ======= ROUTES =======
 app.get("/welcome", (req, res) => {
     // is going to run if the user puts /welcome in the url bar and make a cookie check to either redirect or render this page.
     if (req.session.userId) {
@@ -42,10 +49,7 @@ app.post("/registration", (req, res) => {
                     .then(({ rows }) => {
                         // setting user cookie
                         req.session.userId = rows[0].id; // should i send this in res as well
-                        res.json({
-                            success: true,
-                            [req.session.userId]: rows[0].id,
-                        });
+                        res.json({ success: true });
                     })
                     .catch((err) => {
                         console.log(
