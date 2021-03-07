@@ -2,10 +2,9 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const { hash } = require("../server/utils/bc");
+const { hash } = require("./utils/bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
-const { urlencoded } = require("express");
 
 // ==== MIDDLEWARES ======
 app.use(compression());
