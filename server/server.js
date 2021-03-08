@@ -39,7 +39,7 @@ app.get("/welcome", (req, res) => {
 app.post("/registration", (req, res) => {
     const { firstname, lastname, email, password } = req.body;
     if (!firstname || !lastname || !email || !password) {
-        res.json({ success: false });
+        res.json({ success: false, error: true });
     } else {
         hash(password)
             .then((hashedPassword) => {

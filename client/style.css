@@ -1,3 +1,46 @@
 body {
-    background-color: ghostwhite;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    width: 100vw;
+}
+.form,
+.header,
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    justify-content: space-evenly;
+}
+.header {
+    height: 40vh;
+    width: 100%;
+    /* position: relative; */
+    /* display: inline-flex; */
+}
+.header > img {
+    height: 50vh;
+    width: auto;
+}
+.form > * {
+    padding: 5px;
+    margin: 1vh;
+}
+input {
+    border: 1px solid rgb(44, 107, 93);
+    border-radius: 5px;
+    background-color: rgba(85, 85, 85, 0.589);
+}
+input:hover {
+    border: 2px solid rgb(44, 107, 93);
+    border-radius: 5px;
+    background-color: rgba(247, 247, 247, 0.726);
+}
+.button {
+    background-color: rgb(44, 107, 93);
+}
+.button:hover {
+    background-color: rgb(44, 107, 93);
 }
