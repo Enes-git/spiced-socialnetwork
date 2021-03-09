@@ -18,7 +18,7 @@ export default class Registration extends React.Component {
         axios
             .post("/registration", this.state)
             .then(({ data }) => {
-                if (data) {
+                if (data.success) {
                     // redirect
                     location.replace("/");
                 } else {
@@ -60,8 +60,13 @@ export default class Registration extends React.Component {
         return (
             <div className="main">
                 <div className="registration form">
-                    <h1>Register Here</h1>
-                    {this.state.error && <p>something went wrong :(</p>}
+                    <h2>Register Now</h2>
+                    {this.state.error && (
+                        <p className="error">
+                            &#127928; We couldn't get the tone. Please do it
+                            again &#127928;
+                        </p>
+                    )}
                     <input
                         name="firstname"
                         placeholder="firstname"

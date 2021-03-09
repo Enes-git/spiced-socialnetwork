@@ -40,7 +40,18 @@ input:hover {
 }
 .button {
     background-color: rgb(44, 107, 93);
+    border-radius: 8px;
+    padding: 32px 32px;
 }
 .button:hover {
-    background-color: rgb(44, 107, 93);
+    background-image: url("https://jacobsmedia.com/wp-content/uploads/2016/05/rock-n-roll.jpg");
+    background-size: cover;
+    color: cornsilk;
+}
+.error {
+    color: brown;
+}
+.registration > p > a {
+    color: rgb(124, 31, 31);
+    text-decoration: none;
 }
