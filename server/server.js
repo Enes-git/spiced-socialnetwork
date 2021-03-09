@@ -2,10 +2,12 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const { hash } = require("./utils/bc");
+const { hash, compare } = require("./utils/bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
+const csurf = require("csurf");
 
+// =======================
 // ==== MIDDLEWARES ======
 app.use(compression());
 
@@ -19,13 +21,21 @@ app.use(
     })
 );
 
+// csurf
+app.use(csurf());
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
+
 // defining req.body
 app.use(express.urlencoded({ extended: false }));
 
 // securing the communication
 app.use(express.json());
 
-// ======= ROUTES =======
+// =========================
+// ======= ROUTES ==========
 app.get("/welcome", (req, res) => {
     // is going to run if the user puts /welcome in the url bar and make a cookie check to either redirect or render this page.
     if (req.session.userId) {
@@ -63,6 +73,35 @@ app.post("/registration", (req, res) => {
                 res.json({ success: false });
             });
     }
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    if (email == "" || password == "") {
+        res.json({ success: false, error: true });
+    }
+    db.getLogInfo(email)
+        .then(({ rows }) => {
+            // console.log("rows :>> ", rows);
+            const { id, password_hash } = rows[0];
+            return compare(password, password_hash)
+                .then((match) => {
+                    if (match) {
+                        req.session.userId = id;
+                        res.json({ success: true });
+                    } else {
+                        res.json({ error: true });
+                    }
+                })
+                .catch((err) => {
+                    console.log("err in password matching :>> ", err);
+                    res.json({ success: false });
+                });
+        })
+        .catch((err) => {
+            console.log("err in post/login db.getLogInfo :>> ", err);
+            res.json({ success: false });
+        });
 });
 
 app.get("*", function (req, res) {

@@ -7,7 +7,15 @@ let elem;
 if (location.pathname === "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <p>my main page of website</p>;
+    elem = (
+        <>
+            <h1>RISE AGAINST THE MACHIENE</h1>
+            <img
+                src="https://jacobsmedia.com/wp-content/uploads/2016/05/rock-n-roll.jpg"
+                height="500"
+            ></img>
+        </>
+    );
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class Registration extends React.Component {
     constructor() {
@@ -63,7 +64,7 @@ export default class Registration extends React.Component {
                     <h2>Register Now</h2>
                     {this.state.error && (
                         <p className="error">
-                            &#127928; We couldn't get the tone. Please do it
+                            &#127928; We couldn't catch the tone. Please do it
                             again &#127928;
                         </p>
                     )}
@@ -92,11 +93,11 @@ export default class Registration extends React.Component {
                         className="button"
                         onClick={() => this.handleClick()}
                     >
-                        SUBMIT
+                        ROCK IN
                     </button>
                     <p>
                         If you are already registered please{" "}
-                        <a href="#">log in.</a>
+                        <Link to="/login">log in.</Link>
                     </p>
                 </div>
             </div>

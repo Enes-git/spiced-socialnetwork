@@ -1,4 +1,6 @@
 import Registration from "./registration";
+import { HashRouter, Route } from "react-router-dom";
+import Login from "./login";
 
 // fn comp can be named as presentational comp or dumb comp as well
 
@@ -13,7 +15,13 @@ export default function Welcome() {
                 &#127928; Join perhaps not the largest but the best rock
                 community today! &#127928;
             </h4>
-            <Registration />
+            <HashRouter>
+                <div>
+                    <Route exact path="/" component={Registration} />
+                    <Route path="/login" component={Login} />
+                </div>
+            </HashRouter>
+            {/* <Registration /> */}
         </div>
     );
 }

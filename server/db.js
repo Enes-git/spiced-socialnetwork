@@ -14,3 +14,13 @@ module.exports.addNewUser = (first_name, last_name, email, password_hash) => {
     const params = [first_name, last_name, email, password_hash];
     return db.query(q, params);
 };
+
+// log info of already registered user
+module.exports.getLogInfo = (email) => {
+    const q = `
+    SELECT id, password_hash
+    FROM users
+    WHERE email = $1`;
+    const params = [email];
+    return db.query(q, params);
+};
