@@ -13,7 +13,7 @@ const ses = new aws.SES({
     region: "eu-west-1",
 });
 
-module.export.sendEmail = (to, body, subject) =>
+module.export.sendEmail = (to, subject, body) =>
     ses
         .sendEmail({
             Source: "Delicious Unicorn <delicious.unicorn@spicedling.email>",

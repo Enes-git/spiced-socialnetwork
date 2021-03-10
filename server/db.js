@@ -24,3 +24,33 @@ module.exports.getLogInfo = (email) => {
     const params = [email];
     return db.query(q, params);
 };
+
+// reset password code
+module.exports.addResetCode = (email, code) => {
+    const q = `
+    INSERT INTO reset_codes (user_email, code)
+    VALUES ($1, $2)
+    `;
+    const params = [email, code];
+    return db.query(q, params);
+};
+
+// getting/verifying the reset code
+module.exports.verifyResetCode = (email) => {
+    const q = `
+    SELECT user_email, code
+    FROM reset_codes
+    WHERE user_email = $1`;
+    const params = [email];
+    return db.query(q, params);
+};
+
+// updating password
+module.exports.updatePassword = (email, password_hash) => {
+    const q = `
+    UPDATE users 
+    SET password_hash = $1
+    WHERE email = $2`;
+    const params = [email, password_hash];
+    return db.query(q, params);
+};
