@@ -34,8 +34,9 @@ app.use(express.urlencoded({ extended: false }));
 // securing the communication
 app.use(express.json());
 
-// =========================
-// ======= ROUTES ==========
+// ============================
+//   ======= ROUTES ==========
+app.post("/password/reset/start", (req, res) => {});
 app.get("/welcome", (req, res) => {
     // is going to run if the user puts /welcome in the url bar and make a cookie check to either redirect or render this page.
     if (req.session.userId) {

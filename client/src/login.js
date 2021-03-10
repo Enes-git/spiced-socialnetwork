@@ -66,6 +66,10 @@ export default class Login extends React.Component {
                         If you are not member please{" "}
                         <Link to="/register">register here.</Link>
                     </p>
+                    <p>
+                        If you forgot your password you can reset it
+                        <Link to="/password/reset/start">here.</Link>
+                    </p>
                 </div>
             </>
         );
