@@ -38,7 +38,7 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
-app.post("/password/reset/start", (req, res) => {
+app.post("/password_reset/start", (req, res) => {
     const requestingEmail = req.body.email; // no need to seperate emails??
     db.getLogInfo(requestingEmail)
         .then(({ rows }) => {
@@ -77,7 +77,7 @@ app.post("/password/reset/start", (req, res) => {
         });
 });
 
-app.post("/password/reset/verify", (req, res) => {
+app.post("/password_reset/verify", (req, res) => {
     console.log("req.body :>> ", req.body);
     // const { email, password } = req.body;
     // const incomingCode = req.body.code;

@@ -29,7 +29,7 @@ export default class Login extends React.Component {
         this.setState(
             {
                 [event.target.name]: event.target.value,
-            },
+            }
             // () => console.log("this.state", this.state)
         );
     }
@@ -63,12 +63,12 @@ export default class Login extends React.Component {
                         ROCK ON
                     </button>
                     <p>
-                        If you are not member please{" "}
-                        <Link to="/register">register here.</Link>
+                        If you are not a member please{" "}
+                        <Link to="/">register here.</Link>
                     </p>
                     <p>
                         If you forgot your password you can reset it
-                        <Link to="/password/reset/start">here.</Link>
+                        <Link to="/password_reset/start"> here.</Link>
                     </p>
                 </div>
             </>

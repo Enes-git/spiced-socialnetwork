@@ -20,7 +20,7 @@ export default class ResetPassword extends React.Component {
     handleClick() {
         if (step === 1) {
             axios
-                .post("/password/reset/start", this.state)
+                .post("/password_reset/start", this.state)
                 .then(({ data }) => {
                     if (data.success) {
                         return this.setState({ step: 2 });
@@ -33,7 +33,7 @@ export default class ResetPassword extends React.Component {
                 });
         } else if (step === 2) {
             axios
-                .post("/password/reset/verify", this.state)
+                .post("/password_reset/verify", this.state)
                 .then(({ data }) => {
                     if (data.success) {
                         return this.setState({ step: 3 });
@@ -88,7 +88,7 @@ export default class ResetPassword extends React.Component {
                         <p>Your info is changed.</p>
                         <p>
                             Click to
-                            <Link to="/password/reset/start"> to log in.</Link>
+                            <Link to="/login"> log in.</Link>
                         </p>
                     </div>
                 )}
