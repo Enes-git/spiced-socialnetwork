@@ -51,11 +51,14 @@ export default class ResetPassword extends React.Component {
         const { step } = this.state;
         return (
             <div className="password reset">
-                <h3>Please write your registered email adress below.</h3>
                 {step == 1 && (
-                    <div className="reset">
+                    <div className="reset form">
+                        <h3>
+                            Please write your registered email adress below.
+                        </h3>
                         <input
                             name="email"
+                            placeholder="email"
                             onChange={(event) => this.handleChange(event)}
                         />
                         <button
@@ -67,13 +70,19 @@ export default class ResetPassword extends React.Component {
                     </div>
                 )}
                 {step == 2 && (
-                    <div className="reset">
+                    <div className="reset form">
+                        <h3>
+                            Please write the code you recieved and your new
+                            password below.
+                        </h3>
                         <input
                             name="code"
+                            placeholder="reset code"
                             onChange={(event) => this.handleChange(event)}
                         />
                         <input
                             name="password"
+                            placeholder="new password"
                             onChange={(event) => this.handleChange(event)}
                         />
                         <button
@@ -85,8 +94,8 @@ export default class ResetPassword extends React.Component {
                     </div>
                 )}
                 {step == 3 && (
-                    <div className="reset">
-                        <p>Your info is changed.</p>
+                    <div className="reset form">
+                        <h3>Your info is changed! &#127928;</h3>
                         <p>
                             Click to
                             <Link to="/login"> log in.</Link>

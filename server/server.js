@@ -39,11 +39,11 @@ app.use(express.json());
 // ============================
 //   ======= ROUTES ==========
 app.post("/password_reset/start", (req, res) => {
-    const requestingEmail = req.body.email; // no need to seperate emails??
-    db.getLogInfo(requestingEmail)
+    const { email } = req.body;
+    db.getLogInfo(email)
         .then(({ rows }) => {
-            const emailFromDB = rows[0].email;
-            if (!emailFromDB) {
+            if (!rows.length) {
+                console.log("err in rows :>> ", rows);
                 return res.json({ success: false });
             }
             const code = crs({ length: 6 });
@@ -52,7 +52,7 @@ app.post("/password_reset/start", (req, res) => {
                     sendEmail(
                         "delicious.unicorn@spicedling.email",
                         "Reset Your Cool Rocker Password",
-                        "We saw that you are too much focused on the cool tones and forgot your password to Rocker World! So here is a new key to set another cool password: " +
+                        "We saw that you are too much focused on the cool tones and forgot your password to Rocker World! So here is a new key to set another cool password. Beware! This code will expire in 10 minutes! Your reset code is: " +
                             code
                     )
                         .then(() => {
@@ -78,43 +78,43 @@ app.post("/password_reset/start", (req, res) => {
 });
 
 app.post("/password_reset/verify", (req, res) => {
-    console.log("req.body :>> ", req.body);
-    // const { email, password } = req.body;
-    // const incomingCode = req.body.code;
-    // db.verifyResetCode(email)
-    //     .then(({ rows }) => {
-    //         const { user_email, code } = rows[0];
-    //         if (user_email === email && code === incomingCode) {
-    //             hash(password)
-    //                 .then((hashedPassword) => {
-    //                     return db
-    //                         .updatePassword(user_email, hashedPassword)
-    //                         .then(() => {
-    //                             res.json({ success: true });
-    //                         })
-    //                         .catch((err) => {
-    //                             console.log(
-    //                                 "err in post/verify db.updatePassword :>> ",
-    //                                 err
-    //                             );
-    //                             res.json({ success: false });
-    //                         });
-    //                 })
-    //                 .catch((err) => {
-    //                     console.log(
-    //                         "err in post/verify pasword hashing :>> ",
-    //                         err
-    //                     );
-    //                     res.json({ success: false });
-    //                 });
-    //         } else {
-    //             res.json({ success: false });
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         console.log("err in post/verify db.verifyResetCode :>> ", err);
-    //         res.json({ success: false });
-    //     });
+    // console.log("req.body :>> ", req.body);
+    const { email, password } = req.body;
+    const incomingCode = req.body.code;
+    db.verifyResetCode(email)
+        .then(({ rows }) => {
+            const { user_email, code } = rows[0];
+            if (user_email === email && code === incomingCode) {
+                hash(password)
+                    .then((hashedPassword) => {
+                        return db
+                            .updatePassword(hashedPassword, email)
+                            .then(() => {
+                                res.json({ success: true });
+                            })
+                            .catch((err) => {
+                                console.log(
+                                    "err in post/verify db.updatePassword :>> ",
+                                    err
+                                );
+                                res.json({ success: false });
+                            });
+                    })
+                    .catch((err) => {
+                        console.log(
+                            "err in post/verify pasword hashing :>> ",
+                            err
+                        );
+                        res.json({ success: false });
+                    });
+            } else {
+                res.json({ success: false });
+            }
+        })
+        .catch((err) => {
+            console.log("err in post/verify db.verifyResetCode :>> ", err);
+            res.json({ success: false });
+        });
 });
 
 app.get("/welcome", (req, res) => {

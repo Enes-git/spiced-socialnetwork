@@ -64,7 +64,7 @@ export default class Registration extends React.Component {
                     <h2>Register Now</h2>
                     {this.state.error && (
                         <p className="error">
-                            &#127928; We couldn't catch the tone. Please do it
+                            &#127928; We could not catch the tone. Please do it
                             again &#127928;
                         </p>
                     )}
