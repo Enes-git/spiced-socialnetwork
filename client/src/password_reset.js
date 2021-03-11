@@ -18,6 +18,7 @@ export default class ResetPassword extends React.Component {
     }
 
     handleClick() {
+        const { step } = this.state;
         if (step === 1) {
             axios
                 .post("/password_reset/start", this.state)
@@ -49,10 +50,10 @@ export default class ResetPassword extends React.Component {
     render() {
         const { step } = this.state;
         return (
-            <div class="password reset">
-                <h1>Reset</h1>
+            <div className="password reset">
+                <h3>Please write your registered email adress below.</h3>
                 {step == 1 && (
-                    <div class="reset">
+                    <div className="reset">
                         <input
                             name="email"
                             onChange={(event) => this.handleChange(event)}
@@ -66,7 +67,7 @@ export default class ResetPassword extends React.Component {
                     </div>
                 )}
                 {step == 2 && (
-                    <div class="reset">
+                    <div className="reset">
                         <input
                             name="code"
                             onChange={(event) => this.handleChange(event)}
@@ -84,7 +85,7 @@ export default class ResetPassword extends React.Component {
                     </div>
                 )}
                 {step == 3 && (
-                    <div class="reset">
+                    <div className="reset">
                         <p>Your info is changed.</p>
                         <p>
                             Click to

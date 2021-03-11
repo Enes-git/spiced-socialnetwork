@@ -45,13 +45,13 @@ export default class Registration extends React.Component {
         this.setState(
             {
                 [event.target.name]: event.target.value, // this does not mean array! rather a var
-            },
+            }
             //takes two arg, 1 obj and a callback!
             // this callback runs after setState finishes updating state
             // because we're logging state here in the callback, this means this
             // log won't run until state has been updated, ensuring us that
             // we're seeing the most updated log
-            () => console.log("this.state after setState: ", this.state)
+            // () => console.log("this.state after setState: ", this.state)
         );
 
         // console.log("this.state after setState: ", this.state); (99% this log is ok, but beware of asynchronism)

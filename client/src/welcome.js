@@ -1,6 +1,7 @@
 import Registration from "./registration";
 import { HashRouter, Route } from "react-router-dom";
 import Login from "./login";
+import ResetPassword from "./password_reset";
 
 // fn comp can be named as presentational comp or dumb comp as well
 
@@ -19,6 +20,7 @@ export default function Welcome() {
                 <div>
                     <Route exact path="/" component={Registration} />
                     <Route path="/login" component={Login} />
+                    <Route path="/password_reset" component={ResetPassword} />
                 </div>
             </HashRouter>
         </div>
