@@ -25,6 +25,16 @@ module.exports.getLogInfo = (email) => {
     return db.query(q, params);
 };
 
+// get user info - this should be merged with getLogInfo ????????????????????????
+module.exports.getUserInfo = (id) => {
+    const q = `
+    SELECT *
+    FROM users
+    WHERE id=$1`;
+    const params = [id];
+    return db.query(q, params);
+};
+
 // updating password
 module.exports.updatePassword = (password_hash, email) => {
     const q = `

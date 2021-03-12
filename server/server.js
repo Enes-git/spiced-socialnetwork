@@ -38,6 +38,17 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.get("/user", (req, res) => {
+    db.getUserInfo(req.session.userId)
+        .then(({ rows }) => {
+            // console.log("rows[0] :>> ", rows[0]);
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in get/user route db.getUserInfo :>> ", err);
+        });
+});
+
 app.post("/password_reset/start", (req, res) => {
     const { email } = req.body;
     db.getLogInfo(email)
