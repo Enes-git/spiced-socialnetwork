@@ -28,7 +28,7 @@ module.exports.getLogInfo = (email) => {
 // get user info - this should be merged with getLogInfo ????????????????????????
 module.exports.getUserInfo = (id) => {
     const q = `
-    SELECT *
+    SELECT first_name, last_name, email
     FROM users
     WHERE id=$1`;
     const params = [id];
@@ -60,10 +60,12 @@ module.exports.addResetCode = (user_email, code) => {
 // getting/verifying the reset code
 module.exports.verifyResetCode = (user_email) => {
     const q = `
-    SELECT user_email, code
+    SELECT *
     FROM reset_codes
     WHERE user_email = $1
-    AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'`;
+    `;
     const params = [user_email];
     return db.query(q, params);
 };
+
+// AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes;' PROBLEMATIC LINE!!!

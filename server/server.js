@@ -94,6 +94,7 @@ app.post("/password_reset/verify", (req, res) => {
     const incomingCode = req.body.code;
     db.verifyResetCode(email)
         .then(({ rows }) => {
+            // console.log("rows from verify reset code :>> ", rows);
             const { user_email, code } = rows[0];
             if (user_email === email && code === incomingCode) {
                 hash(password)
