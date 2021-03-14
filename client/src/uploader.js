@@ -37,6 +37,7 @@ export default class Uploader extends Component {
     }
 
     render() {
+        console.log("this.props :>> ", this.props);
         return (
             <>
                 <div>

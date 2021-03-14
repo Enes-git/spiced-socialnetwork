@@ -8,7 +8,7 @@ const db = spicedPg(
 // inserting new user
 module.exports.addNewUser = (firstname, lastname, email, password_hash) => {
     const q = `
-    INSERT INTO users (first_name, last_name, email, password_hash )
+    INSERT INTO users (first_name, last_name, email, password_hash)
     VALUES ($1, $2, $3, $4)
     RETURNING id`;
     const params = [firstname, lastname, email, password_hash];
@@ -64,6 +64,16 @@ module.exports.addBio = (bio, id) => {
     WHERE id = $2
     RETURNING bio`;
     const params = [bio, id];
+    return db.query(q, params);
+};
+
+// get other user info
+module.exports.getOtherUser = (id) => {
+    const q = `
+    SELECT first_name, last_name, prof_pic_url, bio
+    FROM users
+    WHERE id=$1`;
+    const params = [id];
     return db.query(q, params);
 };
 

@@ -4,6 +4,8 @@ import { Component } from "react";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import Logo from "./logo";
+import { BrowserRouter, Route } from "react-router-dom";
+import OtherProfile from "./otherProfile";
 
 export default class App extends Component {
     constructor() {
@@ -68,15 +70,16 @@ export default class App extends Component {
     // html
     render() {
         return (
-            <div id="app-component">
-                <Logo />
-                {/* <div className="logo">
+            <BrowserRouter>
+                <div id="app-component">
+                    <Logo />
+                    {/* <div className="logo">
                     <img
                         src="https://jacobsmedia.com/wp-content/uploads/2016/05/rock-n-roll.jpg"
                         height="500"
                     />
                 </div> */}
-                {/* <div className="profilePic component">
+                    {/* <div className="profilePic component">
                     <ProfilePic
                         firstname={this.state.firstname}
                         lastname={this.state.lastname}
@@ -85,28 +88,37 @@ export default class App extends Component {
                     />
                 </div> */}
 
-                <div className="uploader component">
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            updatePictureInApp={(prof_pic_url) =>
-                                this.updatePictureInApp(prof_pic_url)
-                            }
-                            //toggleUploader={() => this.toggleUploader()} // this is problematic, breaks toggling function which makes uploader always invisible
-                        />
-                    )}
-                </div>
+                    <div className="uploader component">
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                updatePictureInApp={(prof_pic_url) =>
+                                    this.updatePictureInApp(prof_pic_url)
+                                }
+                                toggleUploader={() => this.toggleUploader()} // this is problematic, breaks toggling function which makes uploader always invisible
+                            />
+                        )}
+                    </div>
 
-                <div className="profile component">
-                    <Profile
-                        firstname={this.state.firstname}
-                        lastname={this.state.lastname}
-                        prof_pic_url={this.state.prof_pic_url}
-                        bio={this.state.bio}
-                        toggleUploader={() => this.toggleUploader()}
-                        updateBioInApp={() => this.updateBioInApp()}
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <div className="profile component">
+                                <Profile
+                                    firstname={this.state.firstname}
+                                    lastname={this.state.lastname}
+                                    prof_pic_url={this.state.prof_pic_url}
+                                    bio={this.state.bio}
+                                    toggleUploader={() => this.toggleUploader()}
+                                    updateBioInApp={() => this.updateBioInApp()}
+                                />
+                            </div>
+                        )}
                     />
+
+                    <Route path="/user/:id" component={OtherProfile} />
                 </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

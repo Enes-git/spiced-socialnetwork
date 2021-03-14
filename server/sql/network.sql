@@ -8,8 +8,8 @@ CREATE TABLE users (
     last_name     VARCHAR NOT NULL CHECK (last_name <> ''),
     email         VARCHAR NOT NULL UNIQUE CHECK (email <> ''),
     password_hash VARCHAR NOT NULL CHECK (password_hash <> ''),
-    prof_pic_url  VARCHAR NOT NULL (prof_pic_url <> ''),
-    bio           VARCHAR NOT NULL (bio <> ''),
+    prof_pic_url  VARCHAR ,
+    bio           VARCHAR ,
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -20,3 +20,5 @@ CREATE TABLE reset_codes (
     user_email    VARCHAR NOT NULL REFERENCES users (email),
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- SELECT * FROM users;

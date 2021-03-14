@@ -16,7 +16,7 @@ export default function ProfilePic({
                 <img
                     src={prof_pic_url}
                     alt={firstname && lastname}
-                    onClick={toggleUploader}
+                    onClick={() => toggleUploader()}
                 />
             </div>
         </>

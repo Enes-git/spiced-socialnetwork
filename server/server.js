@@ -61,6 +61,20 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.get("/user/:id", (req, res) => {
+    const { requestedId } = req.body;
+    db.getOtherUser(requestedId)
+        .then(({ rows }) => {
+            // if(success){go for it} else{go back to your page}
+            rows[0].requestingId = req.session.userId;
+            res.json({ rows });
+        })
+        .catch((err) => {
+            console.log("err in /user/:id db.getOtherUser :>> ", err);
+            res.json({ success: false });
+        });
+});
+
 app.post("/updateBio", (req, res) => {
     const { bioDraft } = req.body;
     db.addBio(bioDraft, req.session.userId)
@@ -101,6 +115,7 @@ app.get("/user", (req, res) => {
         })
         .catch((err) => {
             console.log("err in get/user route db.getUserInfo :>> ", err);
+            res.json({ success: false });
         });
 });
 
