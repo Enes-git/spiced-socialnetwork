@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 900px;
+    /* max-width: 900px; */
     justify-content: space-evenly;
 }
 .header {
@@ -58,4 +58,17 @@ input:hover {
 p > a {
     color: rgb(124, 31, 31);
     text-decoration: none;
+}
+/* .logo {
+    height: 10vh;
+    width: 10vw;
+} */
+#profile-picture {
+    display: inline-flex;
+    /* justify-content: flex-end; */
+    width: 100px;
+    height: 100px;
+}
+#app-component {
+    display: unset;
 }

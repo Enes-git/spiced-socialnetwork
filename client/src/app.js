@@ -1,7 +1,9 @@
 import axios from "axios";
 import { Component } from "react";
-import ProfilePic from "./profilePic";
+// import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
+import Profile from "./profile";
+import Logo from "./logo";
 
 export default class App extends Component {
     constructor() {
@@ -10,9 +12,9 @@ export default class App extends Component {
             error: false,
             firstname: "",
             lastname: "",
-            email: "",
             uploaderIsVisible: false,
-            profilePicUrl: "",
+            prof_pic_url: "",
+            bio: "",
         };
     }
 
@@ -23,30 +25,28 @@ export default class App extends Component {
             .get("/user", this.state)
             .then(({ data }) => {
                 // console.log("data :>> ", data);
-                const { first_name, last_name, email, profile_pic_url } = data;
+                const { first_name, last_name, prof_pic_url, bio } = data;
                 // console.log(
-                //     "firsname,lastname,email :>> ",
+                //     "firsname,lastname :>> ",
                 //     first_name,
                 //     last_name,
-                //     email
                 // );
                 // console.log("typeof first_name :>> ", typeof data.first_name);
                 this.setState(
                     {
                         firstname: first_name,
                         lastname: last_name,
-                        email: email,
-                        profilePicUrl: profile_pic_url,
+                        prof_pic_url: prof_pic_url,
+                        bio: bio,
                     }
                     // () => {
                     //     console.log("this.setState :>> ", this.state);
                     // }
                 );
                 // console.log(     A BAD ERR HERE TO LOG WHICH COSTED HOURS!!!!
-                //     "firstname,lastname,email :>> ",
+                //     "firstname,lastname :>> ",
                 //     this.firstname,
                 //     this.lastname,
-                //     this.email
                 // );
             })
             .catch((err) => {
@@ -57,41 +57,56 @@ export default class App extends Component {
     toggleUploader() {
         this.setState({ uploaderIsVisible: !this.state.uploaderIsVisible });
     }
-    updatePictureInApp(profilePicUrl) {
-        // console.log("arg in updatePictureInApp :>> ", profilePicUrl);
-        this.setState({ profilePicUrl: profilePicUrl });
+    updatePictureInApp(prof_pic_url) {
+        // console.log("arg in updatePictureInApp :>> ", prof_pic_url);
+        this.setState({ prof_pic_url: prof_pic_url });
+    }
+    updateBioInApp(bioDraft) {
+        this.setState({ bio: bioDraft });
     }
 
     // html
     render() {
         return (
-            <>
-                <div className="logo">
+            <div id="app-component">
+                <Logo />
+                {/* <div className="logo">
                     <img
                         src="https://jacobsmedia.com/wp-content/uploads/2016/05/rock-n-roll.jpg"
                         height="500"
                     />
-                </div>
-                <div className="profilePic component">
+                </div> */}
+                {/* <div className="profilePic component">
                     <ProfilePic
                         firstname={this.state.firstname}
                         lastname={this.state.lastname}
-                        profilePicUrl={this.state.profilePicUrl}
+                        prof_pic_url={this.state.prof_pic_url}
                         toggleUploader={() => this.toggleUploader()}
                     />
-                </div>
+                </div> */}
 
                 <div className="uploader component">
                     {this.state.uploaderIsVisible && (
                         <Uploader
-                            updatePictureInApp={(profilePicUrl) =>
-                                this.updatePictureInApp(profilePicUrl)
+                            updatePictureInApp={(prof_pic_url) =>
+                                this.updatePictureInApp(prof_pic_url)
                             }
                             //toggleUploader={() => this.toggleUploader()} // this is problematic, breaks toggling function which makes uploader always invisible
                         />
                     )}
                 </div>
-            </>
+
+                <div className="profile component">
+                    <Profile
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        prof_pic_url={this.state.prof_pic_url}
+                        bio={this.state.bio}
+                        toggleUploader={() => this.toggleUploader()}
+                        updateBioInApp={() => this.updateBioInApp()}
+                    />
+                </div>
+            </div>
         );
     }
 }

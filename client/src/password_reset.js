@@ -68,6 +68,10 @@ export default class ResetPassword extends React.Component {
                         >
                             ROCK ON
                         </button>
+                        <p>
+                            Go back to
+                            <Link to="/login"> log in page.</Link>
+                        </p>
                     </div>
                 )}
                 {step == 2 && (

@@ -2,19 +2,19 @@ export default function ProfilePic({
     // we can pass props or deconstruct
     firstname,
     lastname,
-    profilePicUrl,
+    prof_pic_url,
     toggleUploader,
 }) {
     // console.log("props in prf pic :>> ", props);
-    profilePicUrl = profilePicUrl || "default.png";
+    prof_pic_url = prof_pic_url || "default.png";
     return (
         <>
-            <div className="profile picture">
+            <div id="profile-picture">
                 {/* <p>
                     {firstname} {lastname}
                 </p> */}
                 <img
-                    src={profilePicUrl}
+                    src={prof_pic_url}
                     alt={firstname && lastname}
                     onClick={toggleUploader}
                 />

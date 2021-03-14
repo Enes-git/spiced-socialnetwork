@@ -25,10 +25,10 @@ module.exports.getLogInfo = (email) => {
     return db.query(q, params);
 };
 
-// get user info - this should be merged with getLogInfo ????????????????????????
+// get user info
 module.exports.getUserInfo = (id) => {
     const q = `
-    SELECT first_name, last_name, email
+    SELECT first_name, last_name, email, bio
     FROM users
     WHERE id=$1`;
     const params = [id];
@@ -42,6 +42,28 @@ module.exports.updatePassword = (password_hash, email) => {
     SET password_hash = $1
     WHERE email = $2`;
     const params = [password_hash, email];
+    return db.query(q, params);
+};
+
+// add new profile picture url
+module.exports.addProfilePic = (url, id) => {
+    const q = `
+    UPDATE users 
+    SET prof_pic_url = $1
+    WHERE id = $2
+    RETURNING prof_pic_url`;
+    const params = [url, id];
+    return db.query(q, params);
+};
+
+// add bio info
+module.exports.addBio = (bio, id) => {
+    const q = `
+    UPDATE users 
+    SET bio = $1
+    WHERE id = $2
+    RETURNING bio`;
+    const params = [bio, id];
     return db.query(q, params);
 };
 

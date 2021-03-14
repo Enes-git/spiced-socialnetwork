@@ -4,9 +4,7 @@ import { Component } from "react";
 export default class Uploader extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            imageFile: null,
-        };
+        this.state = {};
         // console.log("props in uploader :>> ", props);
     }
 
@@ -17,11 +15,12 @@ export default class Uploader extends Component {
     updatePictureInUploader() {
         var formData = new FormData();
         formData.append("file", this.state.imageFile);
+        console.log("formData :>> ", formData);
         axios
             .post("/upload", formData)
             .then(({ data }) => {
                 console.log("data in axios  image post :>> ", data);
-                // this.props.updatePictureInApp(data.profilePicUrl);
+                this.props.updatePictureInApp(data.profilePicUrl);
             })
             .catch((err) => {
                 console.log("err in axios post/upload :>> ", err);

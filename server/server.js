@@ -6,8 +6,31 @@ const { hash, compare } = require("./utils/bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const csurf = require("csurf");
-const { sendEmail } = require("./ses");
+const { sendEmail } = require("./utils/ses");
 const crs = require("crypto-random-string");
+const s3 = require("./utils/s3");
+const { s3Url } = require("../server/utils/config.json");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+
+// ==== setting storage place and limitations =====
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 4097152,
+    },
+});
 
 // =======================
 // ==== MIDDLEWARES ======
@@ -38,6 +61,38 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.post("/updateBio", (req, res) => {
+    const { bioDraft } = req.body;
+    db.addBio(bioDraft, req.session.userId)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("err in /updateBio db.addBio :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("hit the post route....");
+    console.log("req.file :>> ", req.file);
+
+    const { filename } = req.file;
+    let url = s3Url + filename;
+
+    db.addProfilePic(url, req.session.userId)
+        .then((result) => {
+            console.log("result from db.addProfPic :>> ", result);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            console.log('err in route "/upload" addNewImage :>> ', err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
 app.get("/user", (req, res) => {
     db.getUserInfo(req.session.userId)
         .then(({ rows }) => {
