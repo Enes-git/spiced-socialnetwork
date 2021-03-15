@@ -12,12 +12,14 @@ export default class App extends Component {
         super();
         this.state = {
             error: false,
-            firstname: "",
-            lastname: "",
+            first_name: "",
+            last_name: "",
             uploaderIsVisible: false,
             prof_pic_url: "",
             bio: "",
         };
+        this.toggleUploader = this.toggleUploader.bind(this);
+        this.updateBioInApp = this.updateBioInApp.bind(this);
     }
 
     // methods
@@ -94,7 +96,7 @@ export default class App extends Component {
                                 updatePictureInApp={(prof_pic_url) =>
                                     this.updatePictureInApp(prof_pic_url)
                                 }
-                                toggleUploader={() => this.toggleUploader()} // this is problematic, breaks toggling function which makes uploader always invisible
+                                toggleUploader={this.toggleUploader}
                             />
                         )}
                     </div>
@@ -105,12 +107,12 @@ export default class App extends Component {
                         render={() => (
                             <div className="profile component">
                                 <Profile
-                                    firstname={this.state.firstname}
-                                    lastname={this.state.lastname}
+                                    first_name={this.state.first_name}
+                                    last_name={this.state.last_name}
                                     prof_pic_url={this.state.prof_pic_url}
                                     bio={this.state.bio}
                                     toggleUploader={() => this.toggleUploader()}
-                                    updateBioInApp={() => this.updateBioInApp()}
+                                    updateBioInApp={this.updateBioInApp}
                                 />
                             </div>
                         )}

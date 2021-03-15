@@ -5,7 +5,7 @@ export default class BioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editModOn: false,
+            editModOn: null,
             textAreaMod: "disabled", // i could not implement this????
             buttonText: "",
             bioDraft: "",
@@ -18,23 +18,28 @@ export default class BioEditor extends Component {
             // console.log("grandchild just mounted");
             // console.log("props in grandchild", this.props);
             this.setState({ buttonText: "Edit Bio" });
+            this.setState({ editModOn: true });
         } else {
             this.setState({ buttonText: "Add Bio" });
+            this.setState({ editModOn: false });
         }
     }
     handleChange(event) {
         this.setState({ bioDraft: event.target.value }, () =>
-            console.log("bioDraft after setState :>> ", this.bioDraft)
+            console.log("bioDraft after setState :>> ", this.state.bioDraft)
         );
     }
     handleClick() {
+        // console.log("this.state.bioDraft :>> ", this.state.bioDraft);
+        // this.setState({ editModOn: true });
         axios
-            .post("/updateBio", this.state.bioDraft)
+            .post("/updateBio", { bio: this.state.bioDraft })
             .then(({ data }) => {
-                if (data.success) {
-                    this.props.updateBioInApp(this.state.bioDraft);
-                    this.setState({ editModOn: false });
-                }
+                console.log("data :>> ", data);
+                const newBio = data.rows[0];
+                // console.log("newBio :>> ", bio);
+                this.props.updateBioInApp(newBio);
+                // this.setState({ editModOn: false });
             })
             .catch((err) => console.log("err in axios /updateBio :>> ", err));
     }
@@ -50,7 +55,7 @@ export default class BioEditor extends Component {
         if (this.state.editModOn == false) {
             return (
                 <>
-                    <textarea defaultValue={this.props.bio} disabled />
+                    <h5 defaultValue={this.props.bio} disabled />
                     <button
                         className="button"
                         onClick={() => this.toggleEditMod()}
@@ -65,7 +70,7 @@ export default class BioEditor extends Component {
                     <textarea
                         defaultValue={this.props.bio}
                         onChange={(event) => this.handleChange(event)}
-                        enabled
+                        enabled="true"
                     />
                     <button
                         className="button"

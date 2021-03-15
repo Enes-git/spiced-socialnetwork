@@ -46,7 +46,7 @@ app.use(
     })
 );
 
-// csurf
+// adding csurf token
 app.use(csurf());
 app.use(function (req, res, next) {
     res.cookie("mytoken", req.csrfToken());
@@ -76,10 +76,12 @@ app.get("/user/:id", (req, res) => {
 });
 
 app.post("/updateBio", (req, res) => {
-    const { bioDraft } = req.body;
-    db.addBio(bioDraft, req.session.userId)
-        .then(() => {
-            res.json({ success: true });
+    // console.log("req.body :>> ", req.body);
+    const { bio } = req.body;
+    db.addBio(bio, req.session.userId)
+        .then(({ rows }) => {
+            // console.log("rows :>> ", rows);
+            res.json({ rows });
         })
         .catch((err) => {
             console.log("err in /updateBio db.addBio :>> ", err);

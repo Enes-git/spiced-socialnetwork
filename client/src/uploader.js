@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axios";
 import { Component } from "react";
 
 export default class Uploader extends Component {
@@ -6,6 +6,7 @@ export default class Uploader extends Component {
         super(props);
         this.state = {};
         // console.log("props in uploader :>> ", props);
+        // this.file = null;
     }
 
     // methods
@@ -14,7 +15,7 @@ export default class Uploader extends Component {
     }
     updatePictureInUploader() {
         var formData = new FormData();
-        formData.append("file", this.state.imageFile);
+        formData.append("file", this.state.file);
         console.log("formData :>> ", formData);
         axios
             .post("/upload", formData)
@@ -32,8 +33,9 @@ export default class Uploader extends Component {
 
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value,
+            [event.target.name]: event.target.files[0],
         });
+        // this.file = event.target.files[0];
     }
 
     render() {
@@ -57,9 +59,7 @@ export default class Uploader extends Component {
                         Running method in uploader
                     </p> */}
                 </div>
-                <img
-                    src="x.png" /* onClick={() => this.closeUploader()} "problematic due to parent comp not passing the fn" */
-                />
+                <img src="x.png" onClick={() => this.closeUploader()} />
             </>
         );
     }

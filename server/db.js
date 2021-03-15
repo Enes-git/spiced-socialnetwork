@@ -28,7 +28,7 @@ module.exports.getLogInfo = (email) => {
 // get user info
 module.exports.getUserInfo = (id) => {
     const q = `
-    SELECT first_name, last_name, email, bio
+    SELECT first_name, last_name, prof_pic_url, bio
     FROM users
     WHERE id=$1`;
     const params = [id];
