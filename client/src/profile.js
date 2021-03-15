@@ -30,7 +30,12 @@ export default function Profile({
                 />
             </div>
             <div className="bioEditor component">
-                <BioEditor bio={bio} updateBioInApp={() => updateBioInApp()} />
+                <BioEditor
+                    first_name={first_name}
+                    last_name={last_name}
+                    bio={bio}
+                    updateBioInApp={updateBioInApp}
+                />
             </div>
         </>
     );

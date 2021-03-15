@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [searchTerm, setSearchTerm] = useState();
     const [resultUsers, setResultUsers] = useState();
 
-    // setting the state of the component
+    // getting & setting the initial state of the component
     useEffect(function () {
-        axios.get("/users/most-recent").then(({ data }) => {
-            setResultUsers(data.users);
-        });
+        axios
+            .get("/users/most-recent")
+            .then(({ data }) => {
+                setResultUsers(data.rows);
+            })
+            .catch((err) =>
+                console.log("err in axios get/most-recent :>> ", err)
+            );
     }, []);
 
-    // making the first req when mount
+    // making the find requests
     useEffect(
         function () {
             axios
-                .get("/user/" + searchTerm)
+                .get("/users/find?q=" + searchTerm)
                 .then(({ data }) => {
-                    setResultUsers(data.users);
+                    setResultUsers(data.rows);
                 })
                 .catch((err) => {
                     console.log("err :>> ", err);
@@ -32,9 +38,19 @@ export default function FindPeople() {
         <>
             {resultUsers &&
                 resultUsers.map(function (user) {
-                    return <div key={user.id}>{user.first}</div>;
+                    return (
+                        <div key={user.id}>
+                            <Link to="/user/:id">
+                                <img src={user.prof_pic_url} />
+                                <div>
+                                    {user.first_name} {user.last_name}
+                                </div>
+                            </Link>
+                        </div>
+                    );
                 })}
             <input
+                placeholder="Serach new rockers!"
                 defaultValue={searchTerm}
                 onChange={({ target }) => {
                     setSearchTerm(target.value);

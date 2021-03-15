@@ -6,6 +6,7 @@ import Profile from "./profile";
 import Logo from "./logo";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
 
 export default class App extends Component {
     constructor() {
@@ -22,7 +23,7 @@ export default class App extends Component {
         this.updateBioInApp = this.updateBioInApp.bind(this);
     }
 
-    // methods
+    // methods ===========
     componentDidMount() {
         // console.log("Still working late after component mount ha? :>> ");
         axios
@@ -30,16 +31,12 @@ export default class App extends Component {
             .then(({ data }) => {
                 // console.log("data :>> ", data);
                 const { first_name, last_name, prof_pic_url, bio } = data;
-                // console.log(
-                //     "firsname,lastname :>> ",
-                //     first_name,
-                //     last_name,
-                // );
+                console.log("firsname,lastname :>> ", first_name, last_name);
                 // console.log("typeof first_name :>> ", typeof data.first_name);
                 this.setState(
                     {
-                        firstname: first_name,
-                        lastname: last_name,
+                        first_name: first_name,
+                        last_name: last_name,
                         prof_pic_url: prof_pic_url,
                         bio: bio,
                     }
@@ -47,11 +44,6 @@ export default class App extends Component {
                     //     console.log("this.setState :>> ", this.state);
                     // }
                 );
-                // console.log(     A BAD ERR HERE TO LOG WHICH COSTED HOURS!!!!
-                //     "firstname,lastname :>> ",
-                //     this.firstname,
-                //     this.lastname,
-                // );
             })
             .catch((err) => {
                 console.log("err in axios get/user :>> ", err);
@@ -69,26 +61,12 @@ export default class App extends Component {
         this.setState({ bio: bioDraft });
     }
 
-    // html
+    // html =============
     render() {
         return (
             <BrowserRouter>
                 <div id="app-component">
                     <Logo />
-                    {/* <div className="logo">
-                    <img
-                        src="https://jacobsmedia.com/wp-content/uploads/2016/05/rock-n-roll.jpg"
-                        height="500"
-                    />
-                </div> */}
-                    {/* <div className="profilePic component">
-                    <ProfilePic
-                        firstname={this.state.firstname}
-                        lastname={this.state.lastname}
-                        prof_pic_url={this.state.prof_pic_url}
-                        toggleUploader={() => this.toggleUploader()}
-                    />
-                </div> */}
 
                     <div className="uploader component">
                         {this.state.uploaderIsVisible && (
@@ -111,7 +89,7 @@ export default class App extends Component {
                                     last_name={this.state.last_name}
                                     prof_pic_url={this.state.prof_pic_url}
                                     bio={this.state.bio}
-                                    toggleUploader={() => this.toggleUploader()}
+                                    toggleUploader={this.toggleUploader}
                                     updateBioInApp={this.updateBioInApp}
                                 />
                             </div>
@@ -119,6 +97,8 @@ export default class App extends Component {
                     />
 
                     <Route path="/user/:id" component={OtherProfile} />
+
+                    <Route path="/users" component={FindPeople} />
                 </div>
             </BrowserRouter>
         );

@@ -8,17 +8,15 @@ export default class OtherProfile extends Component {
     }
 
     componentDidMount() {
-        console.log("this.props.match :>> ", this.props.match);
-        console.log(
-            "this.props.match.params.id :>> ",
-            this.props.match.params.id
-        );
+        // console.log("this.props.match :>> ", this.props.match);
+        // console.log(
+        //     "this.props.match.params.id :>> ",
+        //     this.props.match.params.id
+        // );
 
-        const requestedId = this.props.match.params.id;
+        //const requestedId = this.props.match.params.id;
         axios
-            .get("/user/" + requestedId, {
-                requestedId: this.props.match.params.id,
-            })
+            .get(`/api_user/${this.props.match.params.id}`)
             .then(({ data }) => {
                 const {
                     first_name,
@@ -28,7 +26,7 @@ export default class OtherProfile extends Component {
                     requestingId,
                 } = data.rows[0];
 
-                if (requestingId == requestedId) {
+                if (requestingId == this.props.match.params.id) {
                     return this.props.history.push("/");
                 } else {
                     this.setState({
@@ -39,7 +37,9 @@ export default class OtherProfile extends Component {
                     });
                 }
             })
-            .catch();
+            .catch((err) => {
+                console.log("err in axios get/api_user/:id :>> ", err);
+            });
     }
     render() {
         return (
@@ -49,7 +49,7 @@ export default class OtherProfile extends Component {
                 </div>
                 <div>
                     <h2>
-                        {this.state.first_name} {this.state.first_name}
+                        {this.state.first_name} {this.state.last_name}
                     </h2>
                     <p>{this.state.bio}</p>
                 </div>

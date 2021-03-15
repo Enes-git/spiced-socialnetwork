@@ -77,6 +77,16 @@ module.exports.getOtherUser = (id) => {
     return db.query(q, params);
 };
 
+// getting most recent users for user search
+module.exports.getRecentUsers = () => {
+    const q = `
+    SELECT id, first_name, last_name, prof_pic_url
+    FROM users
+    ORDER BY id DESC
+    LIMIT 8`;
+    return db.query(q);
+};
+
 // =============== RESET_CODES TABLE =====================
 // reset password code
 module.exports.addResetCode = (user_email, code) => {

@@ -25,8 +25,10 @@ export default class BioEditor extends Component {
         }
     }
     handleChange(event) {
-        this.setState({ bioDraft: event.target.value }, () =>
-            console.log("bioDraft after setState :>> ", this.state.bioDraft)
+        this.setState(
+            { bioDraft: event.target.value }
+            // () =>
+            //     console.log("bioDraft after setState :>> ", this.state.bioDraft)
         );
     }
     handleClick() {
@@ -35,11 +37,11 @@ export default class BioEditor extends Component {
         axios
             .post("/updateBio", { bio: this.state.bioDraft })
             .then(({ data }) => {
-                console.log("data :>> ", data);
-                const newBio = data.rows[0];
+                // console.log("data :>> ", data);
+                const newBio = data.rows[0].bio;
                 // console.log("newBio :>> ", bio);
                 this.props.updateBioInApp(newBio);
-                // this.setState({ editModOn: false });
+                this.setState({ editModOn: false });
             })
             .catch((err) => console.log("err in axios /updateBio :>> ", err));
     }
@@ -55,7 +57,10 @@ export default class BioEditor extends Component {
         if (this.state.editModOn == false) {
             return (
                 <>
-                    <h5 defaultValue={this.props.bio} disabled />
+                    <h1>
+                        {this.props.first_name} {this.props.last_name}
+                    </h1>
+                    <p>{this.props.bio}</p>
                     <button
                         className="button"
                         onClick={() => this.toggleEditMod()}
@@ -81,39 +86,5 @@ export default class BioEditor extends Component {
                 </>
             );
         }
-        // return (
-        //     <>
-        //         <div className="bio edit">
-        //             {!this.state.editModOn && (
-        //                 <textarea
-        //                     defaultValue={this.props.bio}
-        //                     onChange={(event) => this.handleChange(event)}
-        //                     {this.state.textAreaMod}
-        //                 />
-        //             )}
-        //             <button
-        //                 className="button"
-        //                 onClick={() => this.toggleEditMod()}
-        //             >
-        //                 {this.state.buttonText}
-        //             </button>
-        //         </div>
-
-        //         <div className="bio show">
-        //             {!this.state.editModOn && (
-        //                 <textarea
-        //                     defaultValue={this.props.bio}
-        //                     onChange={(event) => this.handleChange(event)}
-        //                 />
-        //             )}
-        //             <button
-        //                 className="button"
-        //                 onClick={() => this.handleClick()}
-        //             >
-        //                 {this.state.buttonText}
-        //             </button>
-        //         </div>
-        //     </>
-        // );
     }
 }

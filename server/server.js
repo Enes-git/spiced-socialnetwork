@@ -61,8 +61,35 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
-app.get("/user/:id", (req, res) => {
-    const { requestedId } = req.body;
+app.get("/users/find?q=name", (req, res) => {
+    console.log("req.url :>> ", req.url);
+
+    // const requestedUser = req.url.substr(14);
+    db.getRecentUsers()
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("err in get/most-recent db.getRecentUsers :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.get("/users/most-recent", (req, res) => {
+    db.getRecentUsers()
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("err in get/most-recent db.getRecentUsers :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.get("/api_user/:id", (req, res) => {
+    // console.log("req.url :>> ", req.url);
+    const requestedId = req.url.substr(10);
+    // console.log("requestedId :>> ", requestedId);
     db.getOtherUser(requestedId)
         .then(({ rows }) => {
             // if(success){go for it} else{go back to your page}
