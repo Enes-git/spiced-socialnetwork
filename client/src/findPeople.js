@@ -11,7 +11,9 @@ export default function FindPeople() {
         axios
             .get("/users/most-recent")
             .then(({ data }) => {
-                setResultUsers(data.rows);
+                // console.log("data :>> ", data);
+                setResultUsers(data);
+                // console.log("data.rows :>> ", data.rows);
             })
             .catch((err) =>
                 console.log("err in axios get/most-recent :>> ", err)
@@ -21,14 +23,20 @@ export default function FindPeople() {
     // making the find requests
     useEffect(
         function () {
-            axios
-                .get("/users/find?q=" + searchTerm)
-                .then(({ data }) => {
-                    setResultUsers(data.rows);
-                })
-                .catch((err) => {
-                    console.log("err :>> ", err);
-                });
+            //if conditional if there is request
+            if (searchTerm == undefined) {
+                setSearchTerm(undefined);
+            } else {
+                axios
+                    .get("/users/find?q=" + searchTerm)
+                    .then(({ data }) => {
+                        console.log("data :>> ", data);
+                        setResultUsers(data);
+                    })
+                    .catch((err) => {
+                        console.log("err :>> ", err);
+                    });
+            }
         },
         [searchTerm]
     );
@@ -40,7 +48,7 @@ export default function FindPeople() {
                 resultUsers.map(function (user) {
                     return (
                         <div key={user.id}>
-                            <Link to="/user/:id">
+                            <Link to={`/user/${user.id}`}>
                                 <img src={user.prof_pic_url} />
                                 <div>
                                     {user.first_name} {user.last_name}

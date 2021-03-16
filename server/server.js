@@ -12,6 +12,8 @@ const s3 = require("./utils/s3");
 const { s3Url } = require("../server/utils/config.json");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
+const url = require("url");
+const querystring = require("querystring");
 
 // ==== setting storage place and limitations =====
 const diskStorage = multer.diskStorage({
@@ -61,16 +63,20 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
-app.get("/users/find?q=name", (req, res) => {
-    console.log("req.url :>> ", req.url);
-
-    // const requestedUser = req.url.substr(14);
-    db.getRecentUsers()
+app.get("/users/find", (req, res) => {
+    // console.log("req :>> ", req);
+    let parsedUrl = url.parse(req.url);
+    // console.log("parsedUrl :>> ", parsedUrl);
+    var val = querystring.parse(parsedUrl.query);
+    // console.log("val :>> ", val);
+    // console.log("val.q :>> ", val.q);
+    db.getUsersByName(val.q)
         .then(({ rows }) => {
+            // console.log("rows :>> ", rows);
             res.json(rows);
         })
         .catch((err) => {
-            console.log("err in get/most-recent db.getRecentUsers :>> ", err);
+            console.log("err in get/users/find db.getUsersByName :>> ", err);
             res.json({ success: false });
         });
 });
@@ -88,7 +94,8 @@ app.get("/users/most-recent", (req, res) => {
 
 app.get("/api_user/:id", (req, res) => {
     // console.log("req.url :>> ", req.url);
-    const requestedId = req.url.substr(10);
+    // const requestedId = req.url.substr(10);  this is a dangerous way to choose!
+    const requestedId = req.params.id;
     // console.log("requestedId :>> ", requestedId);
     db.getOtherUser(requestedId)
         .then(({ rows }) => {

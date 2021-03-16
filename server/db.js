@@ -83,8 +83,19 @@ module.exports.getRecentUsers = () => {
     SELECT id, first_name, last_name, prof_pic_url
     FROM users
     ORDER BY id DESC
-    LIMIT 8`;
+    LIMIT 5`;
     return db.query(q);
+};
+
+// getting searched link
+module.exports.getUsersByName = (name) => {
+    const q = `
+    SELECT id, first_name, last_name, prof_pic_url
+    FROM users
+    WHERE first_name ILIKE $1 OR last_name ILIKE $1
+    LIMIT 5`;
+    const params = [name + "%"];
+    return db.query(q, params);
 };
 
 // =============== RESET_CODES TABLE =====================
