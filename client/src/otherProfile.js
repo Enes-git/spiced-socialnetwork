@@ -1,5 +1,6 @@
 import axios from "./axios";
 import { Component } from "react";
+import FriendshipButton from "./friendshipButton";
 
 export default class OtherProfile extends Component {
     constructor() {
@@ -9,12 +10,6 @@ export default class OtherProfile extends Component {
 
     componentDidMount() {
         // console.log("this.props.match :>> ", this.props.match);
-        // console.log(
-        //     "this.props.match.params.id :>> ",
-        //     this.props.match.params.id
-        // );
-
-        //const requestedId = this.props.match.params.id;
         axios
             .get(`/api_user/${this.props.match.params.id}`)
             .then(({ data }) => {
@@ -52,6 +47,10 @@ export default class OtherProfile extends Component {
                         {this.state.first_name} {this.state.last_name}
                     </h2>
                     <p>{this.state.bio}</p>
+
+                    <FriendshipButton
+                        requestedId={this.props.match.params.id}
+                    />
                 </div>
             </div>
         );

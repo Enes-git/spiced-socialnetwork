@@ -63,6 +63,22 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.get("/friendship-check/:id", (req, res) => {
+    const loggedInUser = req.session.userId;
+    const otherUser = req.params.id;
+    db.checkFriendship(otherUser, loggedInUser)
+        .then(({ rows }) => {
+            res.json(rows, loggedInUser, otherUser);
+        })
+        .catch((err) => {
+            console.log(
+                "err in get/friendship-req db.checkFriendship :>> ",
+                err
+            );
+            res.json({ success: false });
+        });
+});
+
 app.get("/users/find", (req, res) => {
     // console.log("req :>> ", req);
     let parsedUrl = url.parse(req.url);
@@ -99,7 +115,7 @@ app.get("/api_user/:id", (req, res) => {
     // console.log("requestedId :>> ", requestedId);
     db.getOtherUser(requestedId)
         .then(({ rows }) => {
-            // if(success){go for it} else{go back to your page}
+            // adding id of the requester to the response
             rows[0].requestingId = req.session.userId;
             res.json({ rows });
         })
