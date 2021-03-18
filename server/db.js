@@ -107,6 +107,37 @@ module.exports.checkFriendship = (recipient_id, sender_id) => {
     return db.query(q, params);
 };
 
+// friendship accept
+module.exports.acceptFriendship = (sender_id, recipient_id) => {
+    const q = `
+    UPDATE friendships
+    SET accepted = true
+    WHERE (sender_id = $1 AND recipient_id = $2)
+    OR(sender_id = $2 AND recipient_id = $1)`;
+    const params = [sender_id, recipient_id];
+    return db.query(q, params);
+};
+
+// new friendship
+module.exports.addFriendshipRequest = (sender_id, recipient_id) => {
+    const q = `
+    INSERT INTO friendships (sender_id, recipient_id)
+    VALUES ($1, $2)
+    RETURNING *`;
+    const params = [sender_id, recipient_id];
+    return db.query(q, params);
+};
+
+// cancel friendship
+module.exports.cancelFriendship = (sender_id, recipient_id) => {
+    const q = `
+    DELETE FROM friendships
+    WHERE (recipient_id = $1 AND sender_id = $2)
+    OR (recipient_id = $2 AND sender_id = $1)`;
+    const params = [sender_id, recipient_id];
+    return db.query(q, params);
+};
+
 // =============== RESET_CODES TABLE =====================
 // reset password code
 module.exports.addResetCode = (user_email, code) => {

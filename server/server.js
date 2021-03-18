@@ -63,12 +63,57 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.post("/change-friendship", (req, res) => {
+    const { buttonText } = req.body;
+    console.log("buttonText :>> ", buttonText);
+    const loggedInUser = req.session.userId;
+    const otherUser = req.params.id;
+    console.log("buttonText :>> ", buttonText);
+    if (buttonText == "Unfriend" || buttonText == "Cancel Friend Request") {
+        db.cancelFriendship(loggedInUser, otherUser)
+            .then(({ rows }) => res.json(rows[0]))
+            .catch((err) => {
+                console.log(
+                    "err in /change-friendship db.updateFriendship :>> ",
+                    err
+                );
+                res.json({ success: false });
+            });
+    } else if (buttonText == "Send Friend Request") {
+        db.addFriendshipRequest(loggedInUser, otherUser)
+            .then(({ rows }) => res.json(rows[0]))
+            .catch((err) => {
+                console.log(
+                    "err in /change-friendship db.addNewFriendship :>> ",
+                    err
+                );
+                res.json({ success: false });
+            });
+    } else {
+        db.acceptFriendship(loggedInUser, otherUser)
+            .then(({ rows }) => res.json(rows[0]))
+            .catch((err) => {
+                console.log(
+                    "err in /change-friendship db.acceptFriendship :>> ",
+                    err
+                );
+                res.json({ success: false });
+            });
+    }
+});
+
 app.get("/friendship-check/:id", (req, res) => {
     const loggedInUser = req.session.userId;
     const otherUser = req.params.id;
+    // console.log("loggedInUser - otherUser :>> ", loggedInUser, otherUser);
     db.checkFriendship(otherUser, loggedInUser)
         .then(({ rows }) => {
-            res.json(rows, loggedInUser, otherUser);
+            // console.log("rows :>> ", rows);
+            res.json({
+                rows,
+                loggedInUser: loggedInUser,
+                otherUser: otherUser,
+            });
         })
         .catch((err) => {
             console.log(

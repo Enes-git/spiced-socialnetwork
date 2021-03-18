@@ -48,9 +48,7 @@ export default class OtherProfile extends Component {
                     </h2>
                     <p>{this.state.bio}</p>
 
-                    <FriendshipButton
-                        requestedId={this.props.match.params.id}
-                    />
+                    <FriendshipButton otherUser={this.props.match.params.id} />
                 </div>
             </div>
         );
