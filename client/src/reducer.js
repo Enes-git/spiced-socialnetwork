@@ -1,8 +1,8 @@
 export default function reducer(state = {}, action) {
-    if (action.type === "RECIEVE_FRIENDS__AND_REQUESTS") {
+    if (action.type === "RECIEVE_FRIENDS_AND_REQUESTS") {
         state = {
             ...state,
-            users: action.users,
+            users: action.friendsPlusRequests,
         };
     }
     if (action.type === "MAKE_FRIEND") {

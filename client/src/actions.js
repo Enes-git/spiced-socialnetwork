@@ -1,10 +1,10 @@
 import axios from "./axios";
 // getting all friends and requests
 export async function friendsAndRequests() {
-    const { data } = await axios.get("/friends+requests");
+    const { friendsPlusRequests } = await axios.get("/friends+requests");
     return {
         type: "RECIEVE_FRIENDS_AND_REQUESTS",
-        users: data.users,
+        friendsPlusRequests,
     };
 }
 

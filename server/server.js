@@ -92,8 +92,9 @@ app.post("/add-friend/:id", (req, res) => {
 app.get("/friends+requests", (req, res) => {
     const loggedInUser = req.session.userId;
     db.getFriendsAndRequests(loggedInUser)
-        .then(({ data }) => {
-            res.json(data);
+        .then(({ rows }) => {
+            console.log("rows :>> ", rows);
+            res.json({ friendsPlusRequests: rows });
         })
         .catch((err) => {
             console.log("err in get/friend+requests :>> ", err);

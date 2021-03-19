@@ -7,6 +7,7 @@ import Logo from "./logo";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
+import { Link } from "react-router-dom";
 
 export default class App extends Component {
     constructor() {
@@ -67,6 +68,7 @@ export default class App extends Component {
             <BrowserRouter>
                 <div id="app-component">
                     <Logo />
+                    <Link to="/friends+requests">Friend List</Link>
 
                     <div className="uploader component">
                         {this.state.uploaderIsVisible && (
