@@ -138,6 +138,19 @@ module.exports.cancelFriendship = (sender_id, recipient_id) => {
     return db.query(q, params);
 };
 
+// get active requsts and friends
+module.exports.getFriendsAndRequests = (loggedInUser) => {
+    const q = `
+    SELECT users.id, first_name, last_name, prof_pic_url, accepted
+    FROM friendships
+    JOIN users
+    ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)}`;
+    const params = [loggedInUser];
+    return db.query(q, params);
+};
+
 // =============== RESET_CODES TABLE =====================
 // reset password code
 module.exports.addResetCode = (user_email, code) => {

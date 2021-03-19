@@ -4,21 +4,20 @@ import { Link } from "react-router-dom";
 
 export default function FriendshipButton({ otherUser }) {
     const [buttonText, setButtonText] = useState();
-    // const [resultUsers, setResultUsers] = useState();
-    // const { otherUser } = this.props;
 
-    const handleClick = (buttonText) => {
+    const handleClick = () => {
         console.log("button clicked");
+        console.log("buttonText :>> ", buttonText);
         axios
-            .post("/change-friendship", { buttonText: buttonText })
-            .then(({ data }) => setButtonText(handleButtonText(data)))
+            .post(`/change-friendship/${otherUser}`, { buttonText: buttonText })
+            .then((response) => {
+                // console.log("data post axios :>> ", data);
+                // console.log("response :>> ", response);
+                setButtonText(response.data.buttonText);
+            })
             .catch((err) =>
                 console.log("err in exios post/change-friendship :>> ", err)
             );
-    };
-
-    const handleButtonText = (otherUser) => {
-        setButtonText({ otherUser });
     };
 
     // handling button based on friendship status
@@ -27,6 +26,7 @@ export default function FriendshipButton({ otherUser }) {
             .get(`/friendship-check/${otherUser}`)
             .then((response) => {
                 console.log("response :>> ", response);
+
                 // const { sender_id, recipients_id, accepted } = data.rows;
                 // const { loggedInUser, otherUser } = data;
                 // console.log("!response.data.rows :>> ", !response.data.rows);
@@ -34,21 +34,17 @@ export default function FriendshipButton({ otherUser }) {
                     console.log("setting sent req :>> ");
                     setButtonText("Send Friend Request"); // we are just expressing the text
                 } else {
-                    if (response.data.rows[3] == "accepted") {
-                        setButtonText({ buttonText: "Unfriend" });
+                    if (response.data.rows[0].accepted) {
+                        setButtonText("Unfriend");
                     } else {
                         if (
-                            response.data.rows.recipient_id ==
+                            response.data.rows[0].sender_id ==
                             response.data.loggedInUser
                         ) {
                             // we need to check who the sender opf the req
-                            setButtonText({
-                                buttonText: "Cancel Friend Request",
-                            });
+                            setButtonText("Cancel Friend Request");
                         } else {
-                            setButtonText({
-                                buttonText: "Accept Friend Request",
-                            });
+                            setButtonText("Accept Friend Request");
                         }
                     }
                 }

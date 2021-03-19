@@ -63,35 +63,76 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
-app.post("/change-friendship", (req, res) => {
-    const { buttonText } = req.body;
-    console.log("buttonText :>> ", buttonText);
+app.post("/remove-friend/:id", (req, res) => {
     const loggedInUser = req.session.userId;
     const otherUser = req.params.id;
+    db.removeFriend(otherUser, loggedInUser)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("err in post/remove-friend db.removeFriend :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/add-friend/:id", (req, res) => {
+    const loggedInUser = req.session.userId;
+    const otherUser = req.params.id;
+    db.addNewFriend(otherUser, loggedInUser)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("err in post/add-friend db.addNewFriend :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.get("/friends+requests", (req, res) => {
+    const loggedInUser = req.session.userId;
+    db.getFriendsAndRequests(loggedInUser)
+        .then(({ data }) => {
+            res.json(data);
+        })
+        .catch((err) => {
+            console.log("err in get/friend+requests :>> ", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/change-friendship/:id", (req, res) => {
+    const { buttonText } = req.body;
+    // console.log("buttonText :>> ", buttonText);
+    const loggedInUser = req.session.userId;
+    console.log("loggedInUser :>> ", loggedInUser);
+    // console.log("req.params :>> ", req.params;
+    const otherUser = req.params.id;
+    console.log("otherUser :>> ", otherUser);
     console.log("buttonText :>> ", buttonText);
     if (buttonText == "Unfriend" || buttonText == "Cancel Friend Request") {
         db.cancelFriendship(loggedInUser, otherUser)
-            .then(({ rows }) => res.json(rows[0]))
+            .then(() => res.json({ buttonText: "Send Friend Request" }))
             .catch((err) => {
                 console.log(
-                    "err in /change-friendship db.updateFriendship :>> ",
+                    "err in /change-friendship db.cancelFriendship :>> ",
                     err
                 );
                 res.json({ success: false });
             });
     } else if (buttonText == "Send Friend Request") {
         db.addFriendshipRequest(loggedInUser, otherUser)
-            .then(({ rows }) => res.json(rows[0]))
+            .then(() => res.json({ buttonText: "Cancel Friend Request" }))
             .catch((err) => {
                 console.log(
-                    "err in /change-friendship db.addNewFriendship :>> ",
+                    "err in /change-friendship db.addFriendshipRequest :>> ",
                     err
                 );
                 res.json({ success: false });
             });
     } else {
         db.acceptFriendship(loggedInUser, otherUser)
-            .then(({ rows }) => res.json(rows[0]))
+            .then(() => res.json({ buttonText: "Unfriend" }))
             .catch((err) => {
                 console.log(
                     "err in /change-friendship db.acceptFriendship :>> ",
