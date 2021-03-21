@@ -1,56 +1,70 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { friendsAndRequests, friend, unfriend } from "./actions";
 
 export default function Friends() {
     const dispatch = useDispatch();
     const friends = useSelector(
         (state) =>
-            state.friendsPlusRequests &&
-            state.friendsPlusRequests.filter(
-                (friend) => friend.accepted == true
-            )
+            state.users &&
+            state.users.filter((friend) => friend.accepted == true)
     );
-
+    console.log("friends :>> ", friends);
     const requests = useSelector(
         (state) =>
-            state.friendsPlusRequests &&
-            state.friendsPlusRequests.filter(
-                (request) => request.accepted == false
-            )
+            state.users &&
+            state.users.filter((request) => request.accepted == false)
     );
+    console.log("requests :>> ", requests);
 
     useEffect(() => {
         dispatch(friendsAndRequests());
     }, []);
 
-    if (!friends || !requests) {
+    if (!friends && !requests) {
         return null;
     }
+    // if (!requests) {
+    //     return null;
+    // }
 
     return (
         <div id="friends-requests">
             <div className="friends">
-                <img src={friends[0].prof_pic_url} />
-                <div className="buttons">
-                    <button onClick={() => dispatch(unfriend(friends[0].id))}>
-                        Remove Friend
-                    </button>
-                </div>
+                {friends.map((friend) => (
+                    <div key={friend.id}>
+                        <img src={friend.prof_pic_url} />
+                        <p>
+                            {friend.first_name} {friend.last_name}
+                        </p>
+                        <div className="buttons">
+                            <button
+                                onClick={() => dispatch(unfriend(friend.id))}
+                            >
+                                Remove Friend
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
+            <hr></hr>
             <div className="requests">
-                <img src={requests[0].prof_pic_url} />
-                <div className="buttons">
-                    <button onClick={() => dispatch(friend(requests[0].id))}>
-                        Accept Friendship Request
-                    </button>
-                </div>
+                {requests.map((request) => (
+                    <div key={request.id}>
+                        <img src={request.prof_pic_url} />
+                        <p>
+                            {request.first_name} {request.last_name}
+                        </p>
+                        <div className="buttons">
+                            <button
+                                onClick={() => dispatch(friend(request.id))}
+                            >
+                                Accept Friend Request
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
-            <nav>
-                <Link to="/add-friend">See your friends</Link>
-                <Link to="/remove-friend">See the unlucky ones</Link>
-            </nav>
         </div>
     );
 }

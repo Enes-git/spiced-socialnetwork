@@ -63,10 +63,15 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
 app.post("/remove-friend/:id", (req, res) => {
     const loggedInUser = req.session.userId;
     const otherUser = req.params.id;
-    db.removeFriend(otherUser, loggedInUser)
+    db.cancelFriendship(otherUser, loggedInUser)
         .then(() => {
             res.json({ success: true });
         })
@@ -79,7 +84,8 @@ app.post("/remove-friend/:id", (req, res) => {
 app.post("/add-friend/:id", (req, res) => {
     const loggedInUser = req.session.userId;
     const otherUser = req.params.id;
-    db.addNewFriend(otherUser, loggedInUser)
+    console.log("loggedInUser, otherUser :>> ", loggedInUser, otherUser);
+    db.acceptFriendship(otherUser, loggedInUser)
         .then(() => {
             res.json({ success: true });
         })
@@ -89,11 +95,12 @@ app.post("/add-friend/:id", (req, res) => {
         });
 });
 
-app.get("/friends+requests", (req, res) => {
+app.get("/friends-requests", (req, res) => {
     const loggedInUser = req.session.userId;
+    // console.log("loggedInUser :>> ", loggedInUser);
     db.getFriendsAndRequests(loggedInUser)
         .then((data) => {
-            console.log("data :>> ", data);
+            // console.log("data from friends req inserver :>> ", data);
             res.json(data);
         })
         .catch((err) => {

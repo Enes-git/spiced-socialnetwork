@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import { Link } from "react-router-dom";
+import Friends from "./friends";
 
 export default class App extends Component {
     constructor() {
@@ -68,7 +69,7 @@ export default class App extends Component {
             <BrowserRouter>
                 <div id="app-component">
                     <Logo />
-                    <Link to="/friends+requests">Friend List</Link>
+                    <Route path="/friendslist" component={Friends} />
 
                     <div className="uploader component">
                         {this.state.uploaderIsVisible && (

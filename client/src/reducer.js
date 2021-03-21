@@ -8,14 +8,14 @@ export default function reducer(state = {}, action) {
     if (action.type === "MAKE_FRIEND") {
         state = {
             ...state,
-            users: state.users.map((user) => {
-                if (user.id == action.id) {
+            users: state.users.map((request) => {
+                if (request.id == action.id) {
                     return {
-                        ...user,
-                        friend: action.type == "MAKE_FRIEND",
+                        ...request,
+                        accepted: true,
                     };
                 } else {
-                    return user;
+                    return request;
                 }
             }),
         };
@@ -23,14 +23,14 @@ export default function reducer(state = {}, action) {
     if (action.type === "REMOVE_FRIEND") {
         state = {
             ...state,
-            users: state.users.map((user) => {
-                if (user.id == action.id) {
+            users: state.users.map((friend) => {
+                if (friend.id == action.id) {
                     return {
-                        ...user,
-                        friend: action.type == "REMOVE_FRIEND",
+                        ...friend,
+                        accepted: false,
                     };
                 } else {
-                    return user;
+                    return friend;
                 }
             }),
         };

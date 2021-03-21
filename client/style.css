@@ -72,3 +72,51 @@ p > a {
 #app-component {
     display: unset;
 }
+#friends-requests {
+    display: flex;
+    flex-direction: column;
+}
+.friends {
+    display: flex;
+    max-width: 900px;
+    margin: 10px;
+    padding: 5px;
+    justify-content: center;
+}
+.friends > div {
+    padding: 10px;
+    height: 40vh;
+    width: 20vw;
+}
+.friends > div > img {
+    max-height: 100%;
+    max-width: 100%;
+}
+.requests {
+    display: flex;
+    max-width: 900px;
+    margin: 10px;
+    padding: 5px;
+    justify-content: center;
+}
+.requests > div {
+    padding: 10px;
+    height: 40vh;
+    width: 20vw;
+}
+.requests > div > img {
+    max-height: 100%;
+    max-width: 100%;
+}
+hr {
+    border: 1px solid;
+    width: 100%;
+}
+.logo {
+    display: flex;
+    justify-content: space-between;
+}
+.heade-links {
+    display: flex;
+    flex-direction: column;
+}
