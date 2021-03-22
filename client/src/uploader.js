@@ -41,26 +41,27 @@ export default class Uploader extends Component {
     render() {
         console.log("this.props :>> ", this.props);
         return (
-            <>
-                <div>
+            <div className="uploader">
+                <div id="upload-input">
                     <input
                         type="file"
                         name="file"
                         accept="image/*"
                         onChange={(event) => this.handleChange(event)}
                     />
-                    <button
-                        className="button"
-                        onClick={() => this.updatePictureInUploader()}
-                    >
-                        ROCK UP
-                    </button>
-                    {/* <p onClick={() => this.methodInUploader()}>
-                        Running method in uploader
-                    </p> */}
+                    <img
+                        id="the-x"
+                        src="x.png"
+                        onClick={() => this.closeUploader()}
+                    />
                 </div>
-                <img src="x.png" onClick={() => this.closeUploader()} />
-            </>
+                <button
+                    className="button"
+                    onClick={() => this.updatePictureInUploader()}
+                >
+                    Rock Up
+                </button>
+            </div>
         );
     }
 }

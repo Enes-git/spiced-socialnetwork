@@ -65,7 +65,7 @@ app.use(express.json());
 //   ======= ROUTES ==========
 app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/");
+    res.redirect("/login");
 });
 
 app.post("/remove-friend/:id", (req, res) => {

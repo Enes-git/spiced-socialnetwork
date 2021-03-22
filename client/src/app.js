@@ -68,7 +68,18 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <div id="app-component">
-                    <Logo />
+                    <div className="navbar">
+                        <Logo />
+                        <div className="header-links">
+                            <div>
+                                <Link to="/">My Profile</Link>
+                            </div>
+                            <div>
+                                <Link to="/logout">Logout</Link>
+                            </div>
+                        </div>
+                    </div>
+
                     <Route path="/friendslist" component={Friends} />
 
                     <div className="uploader component">

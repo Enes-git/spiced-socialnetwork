@@ -120,3 +120,14 @@ hr {
     display: flex;
     flex-direction: column;
 }
+#the-x {
+    width: 25px;
+    right: 0;
+}
+.uploader {
+    margin: 5vw;
+}
+#upload-input > * {
+    padding: 3px;
+    margin: 5px;
+}
