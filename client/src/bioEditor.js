@@ -14,9 +14,11 @@ export default class BioEditor extends Component {
 
     // methods
     componentDidMount() {
+        console.log("this.props.bio :>> ", this.props.bio);
         if (this.props.bio) {
             // console.log("grandchild just mounted");
             // console.log("props in grandchild", this.props);
+            this.setState({ bioDraft: this.props.bio });
             this.setState({ buttonText: "Edit Bio" });
             this.setState({ editModOn: true });
         } else {

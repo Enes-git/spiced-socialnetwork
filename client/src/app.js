@@ -65,6 +65,10 @@ export default class App extends Component {
 
     // html =============
     render() {
+        if (!this.state.first_name) {
+            // to prevent the unrecieved data on the page load
+            return null;
+        }
         return (
             <BrowserRouter>
                 <div id="app-component">
@@ -75,7 +79,7 @@ export default class App extends Component {
                                 <Link to="/">My Profile</Link>
                             </div>
                             <div>
-                                <Link to="/logout">Logout</Link>
+                                <a href="/logout">Logout</a>
                             </div>
                         </div>
                     </div>

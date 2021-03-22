@@ -15,6 +15,13 @@ const uidSafe = require("uid-safe");
 const url = require("url");
 const querystring = require("querystring");
 
+// socket boilerplate
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
 // ==== setting storage place and limitations =====
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -425,6 +432,14 @@ app.get("*", function (req, res) {
     }
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("Listen, I will!");
+});
+
+io.on("connetion", (socket) => {
+    console.log("socket.id is on :>> ", socket.id);
+
+    socket.on("disconnect", () =>
+        console.log("socket.id disconnected :>> ", socket.id)
+    );
 });
