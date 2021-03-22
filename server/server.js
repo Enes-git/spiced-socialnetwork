@@ -48,12 +48,21 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 //  cookie session middleware
-app.use(
-    cookieSession({
-        secret: `Hello underworld!`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: `Hello underworld!`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 // adding csurf token
 app.use(csurf());
@@ -72,7 +81,7 @@ app.use(express.json());
 //   ======= ROUTES ==========
 app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/login");
+    res.redirect("/welcome#/login");
 });
 
 app.post("/remove-friend/:id", (req, res) => {
@@ -436,8 +445,25 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("Listen, I will!");
 });
 
-io.on("connetion", (socket) => {
+io.on("connection", (socket) => {
     console.log("socket.id is on :>> ", socket.id);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+    console.log("userId in socket :>> ", userId);
+
+    db.getLastTenMessages(userId)
+        .then(({ rows }) => {
+            console.log("rows from messages :>> ", rows);
+            socket.emit("msg_text", rows.reverse());
+        })
+        .catch((err) => console.log("err in getLastTenMessages :>> ", err));
+
+    socket.on("new message", (data) => {
+        console.log("data :>> ", data);
+    });
 
     socket.on("disconnect", () =>
         console.log("socket.id disconnected :>> ", socket.id)

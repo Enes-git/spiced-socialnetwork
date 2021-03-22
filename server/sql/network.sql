@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS reset_codes;
 DROP TABLE IF EXISTS users;
@@ -28,6 +29,14 @@ CREATE TABLE friendships (
     sender_id     INTEGER NOT NULL REFERENCES users (id),
     recipient_id  INTEGER NOT NULL REFERENCES users (id),
     accepted      BOOLEAN DEFAULT false
+);
+
+-- creating messages table
+CREATE TABLE messages (
+    id            SERIAL PRIMARY KEY,
+    sender_id     INTEGER NOT NULL REFERENCES users (id),
+    msg_text      VARCHAR NOT NULL,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- SELECT * FROM users;

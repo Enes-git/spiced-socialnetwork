@@ -98,6 +98,30 @@ module.exports.getUsersByName = (name) => {
     return db.query(q, params);
 };
 
+// =============== RESET_CODES TABLE =====================
+// reset password code
+module.exports.addResetCode = (user_email, code) => {
+    const q = `
+    INSERT INTO reset_codes (user_email, code)
+    VALUES ($1, $2)
+    ON CONFLICT (user_email)
+    DO UPDATE SET code=$2`;
+    const params = [user_email, code];
+    return db.query(q, params);
+};
+
+// getting/verifying the reset code
+module.exports.verifyResetCode = (user_email) => {
+    const q = `
+    SELECT *
+    FROM reset_codes
+    WHERE user_email = $1
+    `;
+    const params = [user_email];
+    return db.query(q, params);
+};
+
+// =============== FRIENDSHIPS TABLE =====================
 module.exports.checkFriendship = (recipient_id, sender_id) => {
     const q = `
     SELECT * FROM friendships
@@ -151,26 +175,25 @@ module.exports.getFriendsAndRequests = (loggedInUser) => {
     return db.query(q, params);
 };
 
-// =============== RESET_CODES TABLE =====================
-// reset password code
-module.exports.addResetCode = (user_email, code) => {
+// =============== MESSAGES TABLE =====================
+// get last ten messages
+module.exports.getLastTenMessages = (sender_id) => {
     const q = `
-    INSERT INTO reset_codes (user_email, code)
-    VALUES ($1, $2)
-    ON CONFLICT (user_email)
-    DO UPDATE SET code=$2`;
-    const params = [user_email, code];
+    SELECT first_name, last_name, prof_pic_url, msg_text, sender_id
+    FROM messages
+    JOIN users
+    ON (sender_id = $1 AND sender_id = users.id)`;
+    const params = [sender_id];
     return db.query(q, params);
 };
 
-// getting/verifying the reset code
-module.exports.verifyResetCode = (user_email) => {
+// insert new messages
+module.exports.addNewMessage = (sender_id, msg_text) => {
     const q = `
-    SELECT *
-    FROM reset_codes
-    WHERE user_email = $1
-    `;
-    const params = [user_email];
+    INSERT INTO messages (sender_id, msg_text)
+    VALUES ($1, $2)
+    RETURNING *`;
+    const params = [sender_id, msg_text];
     return db.query(q, params);
 };
 

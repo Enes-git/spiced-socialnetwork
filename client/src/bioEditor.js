@@ -5,7 +5,7 @@ export default class BioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editModOn: null,
+            editModOn: false,
             textAreaMod: "disabled", // i could not implement this????
             buttonText: "",
             bioDraft: "",
@@ -20,10 +20,10 @@ export default class BioEditor extends Component {
             // console.log("props in grandchild", this.props);
             this.setState({ bioDraft: this.props.bio });
             this.setState({ buttonText: "Edit Bio" });
-            this.setState({ editModOn: true });
+            // this.setState({ editModOn: false });
         } else {
             this.setState({ buttonText: "Add Bio" });
-            this.setState({ editModOn: false });
+            // this.setState({ editModOn: false });
         }
     }
     handleChange(event) {
