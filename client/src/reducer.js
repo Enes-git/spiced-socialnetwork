@@ -42,18 +42,17 @@ export default function reducer(state = {}, action) {
     if (action.type === "RECIEVE_OLD_MESSAGES") {
         state = {
             ...state,
-            chatMessages: action.oldMessages,
+            oldMessages: action.oldMessages,
         };
+        console.log("state after old messages :>> ", state);
     }
 
     if (action.type === "ADD_NEW_MESSAGE") {
+        console.log("action :>> ", action);
         state = {
             ...state,
-            chatMessages: state.messages.append((msg_text) => {
-                return chatMessages;
-            }),
+            oldMessages: [...state.oldMessages, action.message[0]],
         };
     }
-    // console.log("state :>> ", state);
     return state;
 }

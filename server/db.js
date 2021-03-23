@@ -204,7 +204,7 @@ module.exports.getLastMessage = (sender_id) => {
     FROM messages
     JOIN users
     ON (sender_id = $1 AND sender_id = users.id)
-    ORDER BY created_at DESC
+    ORDER BY messages.created_at DESC
     LIMIT 1`;
     const params = [sender_id];
     return db.query(q, params);

@@ -131,3 +131,10 @@ hr {
     padding: 3px;
     margin: 5px;
 }
+.avatar {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border: 1px solid white;
+    border-radius: 50%;
+}

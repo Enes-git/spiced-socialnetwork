@@ -3,8 +3,8 @@ import { socket } from "./sockets";
 import { useSelector } from "react-redux";
 
 export default function Chat() {
-    const chatMessages = useSelector((state) => state && state.chatMessages);
-    console.log("chatMessages :>> ", chatMessages);
+    const oldMessages = useSelector((state) => state && state.oldMessages);
+    console.log("oldMessages in componenet :>> ", oldMessages);
 
     const handleKey = (e) => {
         if (e.key === "Enter") {
@@ -19,13 +19,19 @@ export default function Chat() {
 
     return (
         <>
-            <h1>Chat Room</h1>
+            <h1>Rocker Room</h1>
+            <h4>You can rock the hell out here!</h4>
             <div className="chat-container">
-                {chatMessages.map((chatMessage) => (
-                    <div key={chatMessage.id}>
-                        <p>{chatMessage.msg_text}</p>
-                    </div>
-                ))}
+                {oldMessages &&
+                    oldMessages.map((message) => (
+                        <div key={message.id}>
+                            <img
+                                className="avatar"
+                                src={message.prof_pic_url}
+                            />
+                            <p>{message.msg_text}</p>
+                        </div>
+                    ))}
             </div>
             <div className="message input">
                 <textarea

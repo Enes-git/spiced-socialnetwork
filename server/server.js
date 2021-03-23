@@ -457,19 +457,18 @@ io.on("connection", (socket) => {
     // getting old messages
     db.getLastTenMessages(userId)
         .then(({ rows }) => {
-            console.log("rows from messages :>> ", rows);
-            socket.emit("chatMessages", rows.reverse());
+            // console.log("rows from messages :>> ", rows);
+            socket.emit("oldMessages", rows);
         })
         .catch((err) => console.log("err in getLastTenMessages :>> ", err));
 
     // new incoming message from chat
     socket.on("new message", (message) => {
-        console.log("the new message is :>> ", message);
+        // console.log("the new message is :>> ", message);
 
         // adding message to db
         db.addNewMessage(userId, message)
             .then(() => {
-                // this may be useless !!!!??????
                 db.getLastMessage(userId)
                     .then(({ rows }) => {
                         console.log("rows in getLAstMessage :>> ", rows);

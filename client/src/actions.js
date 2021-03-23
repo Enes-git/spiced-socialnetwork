@@ -28,20 +28,19 @@ export async function unfriend(id) {
 }
 
 // get old chat messages
-export async function chatMessages() {
-    const { data } = await axios.get(`/`);
+export async function oldMessages(messages) {
+    console.log("old messages in actions :>> ", messages);
     return {
         type: "RECIEVE_OLD_MESSAGES",
-        oldMessages: data.rows,
+        oldMessages: messages,
     };
 }
 
 // add new chat message
-export async function chatMessage(id, msg_text) {
-    await axios.post(`/`);
+export async function newMessage(message) {
+    console.log("message in action :>> ", message);
     return {
         type: "ADD_NEW_MESSAGE",
-        id,
-        msg_text,
+        message,
     };
 }
