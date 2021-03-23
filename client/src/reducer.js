@@ -1,4 +1,6 @@
 export default function reducer(state = {}, action) {
+    //
+    // ========== friendship reducers ====================
     if (action.type === "RECIEVE_FRIENDS_AND_REQUESTS") {
         state = {
             ...state,
@@ -35,6 +37,23 @@ export default function reducer(state = {}, action) {
             }),
         };
     }
-    console.log("state :>> ", state);
+
+    // =========== messaging reducers =============
+    if (action.type === "RECIEVE_OLD_MESSAGES") {
+        state = {
+            ...state,
+            messages: action.oldMessages,
+        };
+    }
+
+    if (action.type === "ADD_NEW_MESSAGE") {
+        state = {
+            ...state,
+            messages: state.messages.append((msg_text) => {
+                return messages;
+            }),
+        };
+    }
+    // console.log("state :>> ", state);
     return state;
 }

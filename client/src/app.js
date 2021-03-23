@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Component } from "react";
-// import ProfilePic from "./profilePic";
+import Chat from "./chat";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import Logo from "./logo";
@@ -33,7 +33,7 @@ export default class App extends Component {
             .then(({ data }) => {
                 // console.log("data :>> ", data);
                 const { first_name, last_name, prof_pic_url, bio } = data;
-                console.log("firsname,lastname :>> ", first_name, last_name);
+                // console.log("firsname,lastname :>> ", first_name, last_name);
                 // console.log("typeof first_name :>> ", typeof data.first_name);
                 this.setState(
                     {
@@ -85,6 +85,8 @@ export default class App extends Component {
                     </div>
 
                     <Route path="/friendslist" component={Friends} />
+
+                    <Route path="/chat" component={Chat} />
 
                     <div className="uploader component">
                         {this.state.uploaderIsVisible && (

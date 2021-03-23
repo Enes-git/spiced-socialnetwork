@@ -454,13 +454,15 @@ io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
     console.log("userId in socket :>> ", userId);
 
+    // getting old messages
     db.getLastTenMessages(userId)
         .then(({ rows }) => {
             console.log("rows from messages :>> ", rows);
-            socket.emit("msg_text", rows.reverse());
+            socket.emit("chatMessages", rows.reverse());
         })
         .catch((err) => console.log("err in getLastTenMessages :>> ", err));
 
+    // new incoming message
     socket.on("new message", (data) => {
         console.log("data :>> ", data);
     });
