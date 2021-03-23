@@ -462,9 +462,29 @@ io.on("connection", (socket) => {
         })
         .catch((err) => console.log("err in getLastTenMessages :>> ", err));
 
-    // new incoming message
-    socket.on("new message", (data) => {
-        console.log("data :>> ", data);
+    // new incoming message from chat
+    socket.on("new message", (message) => {
+        console.log("the new message is :>> ", message);
+
+        // adding message to db
+        db.addNewMessage(userId, message)
+            .then(() => {
+                // this may be useless !!!!??????
+                db.getLastMessage(userId)
+                    .then(({ rows }) => {
+                        console.log("rows in getLAstMessage :>> ", rows);
+                        // sending back the message
+                        socket.emit("lastMessage", rows);
+                    })
+                    .catch((err) =>
+                        console.log("err in db.getLastMessage :>> ", err)
+                    );
+            })
+            .catch((err) => {
+                console.log("err in db.addNewMessage :>> ", err);
+            });
+        // sending back to the message obj
+        io.sockets.emit("last message", message);
     });
 
     socket.on("disconnect", () =>

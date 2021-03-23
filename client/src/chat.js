@@ -6,6 +6,17 @@ export default function Chat() {
     const chatMessages = useSelector((state) => state && state.chatMessages);
     console.log("chatMessages :>> ", chatMessages);
 
+    const handleKey = (e) => {
+        if (e.key === "Enter") {
+            console.log("e.target.value :>> ", e.target.value);
+            e.preventDefault();
+
+            socket.emit("new message", e.target.value);
+
+            e.target.value = "";
+        }
+    };
+
     return (
         <>
             <h1>Chat Room</h1>
@@ -23,6 +34,7 @@ export default function Chat() {
                     rows="4"
                     cols="50"
                     placeholder="Chat with your rock buddies!"
+                    onKeyDown={handleKey}
                 ></textarea>
             </div>
         </>

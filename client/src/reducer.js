@@ -42,15 +42,15 @@ export default function reducer(state = {}, action) {
     if (action.type === "RECIEVE_OLD_MESSAGES") {
         state = {
             ...state,
-            messages: action.oldMessages,
+            chatMessages: action.oldMessages,
         };
     }
 
     if (action.type === "ADD_NEW_MESSAGE") {
         state = {
             ...state,
-            messages: state.messages.append((msg_text) => {
-                return messages;
+            chatMessages: state.messages.append((msg_text) => {
+                return chatMessages;
             }),
         };
     }

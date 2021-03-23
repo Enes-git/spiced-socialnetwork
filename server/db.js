@@ -182,7 +182,8 @@ module.exports.getLastTenMessages = (sender_id) => {
     SELECT first_name, last_name, prof_pic_url, msg_text, sender_id
     FROM messages
     JOIN users
-    ON (sender_id = $1 AND sender_id = users.id)`;
+    ON (sender_id = $1 AND sender_id = users.id)
+    LIMIT 10`;
     const params = [sender_id];
     return db.query(q, params);
 };
@@ -191,9 +192,21 @@ module.exports.getLastTenMessages = (sender_id) => {
 module.exports.addNewMessage = (sender_id, msg_text) => {
     const q = `
     INSERT INTO messages (sender_id, msg_text)
-    VALUES ($1, $2)
-    RETURNING *`;
+    VALUES ($1, $2)`;
     const params = [sender_id, msg_text];
+    return db.query(q, params);
+};
+
+// get the last message
+module.exports.getLastMessage = (sender_id) => {
+    const q = `
+    SELECT first_name, last_name, prof_pic_url, msg_text, sender_id
+    FROM messages
+    JOIN users
+    ON (sender_id = $1 AND sender_id = users.id)
+    ORDER BY created_at DESC
+    LIMIT 1`;
+    const params = [sender_id];
     return db.query(q, params);
 };
 
