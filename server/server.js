@@ -452,7 +452,7 @@ io.on("connection", (socket) => {
     }
 
     const userId = socket.request.session.userId;
-    console.log("userId in socket :>> ", userId);
+    // console.log("userId in socket :>> ", userId);
 
     // getting old messages
     db.getLastTenMessages(userId)
@@ -471,7 +471,7 @@ io.on("connection", (socket) => {
             .then(() => {
                 db.getLastMessage(userId)
                     .then(({ rows }) => {
-                        console.log("rows in getLAstMessage :>> ", rows);
+                        // console.log("rows in getLAstMessage :>> ", rows);
                         // sending back the message
                         socket.emit("lastMessage", rows);
                     })

@@ -44,11 +44,11 @@ export default function reducer(state = {}, action) {
             ...state,
             oldMessages: action.oldMessages,
         };
-        console.log("state after old messages :>> ", state);
+        // console.log("state after old messages :>> ", state);
     }
 
     if (action.type === "ADD_NEW_MESSAGE") {
-        console.log("action :>> ", action);
+        // console.log("action :>> ", action);
         state = {
             ...state,
             oldMessages: [...state.oldMessages, action.message[0]],

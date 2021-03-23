@@ -179,7 +179,7 @@ module.exports.getFriendsAndRequests = (loggedInUser) => {
 // get last ten messages
 module.exports.getLastTenMessages = (sender_id) => {
     const q = `
-    SELECT first_name, last_name, prof_pic_url, msg_text, sender_id
+    SELECT first_name, last_name, prof_pic_url, msg_text, messages.id
     FROM messages
     JOIN users
     ON (sender_id = $1 AND sender_id = users.id)
@@ -200,7 +200,7 @@ module.exports.addNewMessage = (sender_id, msg_text) => {
 // get the last message
 module.exports.getLastMessage = (sender_id) => {
     const q = `
-    SELECT first_name, last_name, prof_pic_url, msg_text, sender_id
+    SELECT first_name, last_name, prof_pic_url, msg_text, messages.id
     FROM messages
     JOIN users
     ON (sender_id = $1 AND sender_id = users.id)

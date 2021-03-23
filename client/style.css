@@ -138,3 +138,10 @@ hr {
     border: 1px solid white;
     border-radius: 50%;
 }
+.chat-container {
+    height: 55vh;
+    overflow-y: auto;
+}
+.chat-container::-webkit-scrollbar {
+    display: none;
+}

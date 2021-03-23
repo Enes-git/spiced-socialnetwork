@@ -29,7 +29,7 @@ export async function unfriend(id) {
 
 // get old chat messages
 export async function oldMessages(messages) {
-    console.log("old messages in actions :>> ", messages);
+    // console.log("old messages in actions :>> ", messages);
     return {
         type: "RECIEVE_OLD_MESSAGES",
         oldMessages: messages,
@@ -38,7 +38,7 @@ export async function oldMessages(messages) {
 
 // add new chat message
 export async function newMessage(message) {
-    console.log("message in action :>> ", message);
+    // console.log("message in action :>> ", message);
     return {
         type: "ADD_NEW_MESSAGE",
         message,
