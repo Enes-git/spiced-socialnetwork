@@ -10,9 +10,9 @@ export default function ProfilePic({
     return (
         <>
             <div id="profile-picture">
-                {/* <p>
+                <p>
                     {firstname} {lastname}
-                </p> */}
+                </p>
                 <img
                     src={prof_pic_url}
                     alt={firstname && lastname}

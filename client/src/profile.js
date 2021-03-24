@@ -26,7 +26,7 @@ export default function Profile({
                     first_name={first_name}
                     last_name={last_name}
                     toggleUploader={() => toggleUploader()}
-                    // add css !!!!!!!!!!!!!!!!!
+                    classBig="big-pic"
                 />
             </div>
             <div className="bioEditor component">

@@ -177,15 +177,13 @@ module.exports.getFriendsAndRequests = (loggedInUser) => {
 
 // =============== MESSAGES TABLE =====================
 // get last ten messages
-module.exports.getLastTenMessages = (sender_id) => {
+module.exports.getLastTenMessages = () => {
     const q = `
-    SELECT first_name, last_name, prof_pic_url, msg_text, messages.id
+    SELECT first_name, last_name, prof_pic_url, msg_text, messages.id, sender_id, messages.created_at
     FROM messages
     JOIN users
-    ON (sender_id = $1 AND sender_id = users.id)
-    LIMIT 10`;
-    const params = [sender_id];
-    return db.query(q, params);
+    ON (sender_id = users.id)`; //how can i limit here???
+    return db.query(q);
 };
 
 // insert new messages

@@ -35,7 +35,6 @@ export default class BioEditor extends Component {
     }
     handleClick() {
         // console.log("this.state.bioDraft :>> ", this.state.bioDraft);
-        // this.setState({ editModOn: true });
         axios
             .post("/updateBio", { bio: this.state.bioDraft })
             .then(({ data }) => {

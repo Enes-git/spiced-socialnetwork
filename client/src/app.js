@@ -9,6 +9,7 @@ import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import { Link } from "react-router-dom";
 import Friends from "./friends";
+import ProfilePic from "./profilePic";
 
 export default class App extends Component {
     constructor() {
@@ -74,12 +75,22 @@ export default class App extends Component {
                 <div id="app-component">
                     <div className="navbar">
                         <Logo />
-                        <div className="header-links">
-                            <div>
-                                <Link to="/">My Profile</Link>
+                        <div className="links-and-pic">
+                            <div className="header-links">
+                                <div>
+                                    <Link to="/">My Profile</Link>
+                                </div>
+                                <div>
+                                    <Link to="/chat">Rocker Room</Link>
+                                </div>
+                                <div>
+                                    <a href="/logout">Logout</a>
+                                </div>
                             </div>
-                            <div>
-                                <a href="/logout">Logout</a>
+                            <div id="prof-pic">
+                                <ProfilePic
+                                    prof_pic_url={this.state.prof_pic_url}
+                                />
                             </div>
                         </div>
                     </div>

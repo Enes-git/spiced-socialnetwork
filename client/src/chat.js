@@ -18,9 +18,6 @@ export default function Chat() {
     };
 
     const elemRef = useRef();
-    // const scrollToBottom = () => {
-    //     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-    // };
     useEffect(() => {
         // console.log("elemRef.current :>> ", elemRef.current);
         // console.log(
@@ -45,32 +42,49 @@ export default function Chat() {
 
     return (
         <>
-            <h1>Rocker Room</h1>
-            <h4>You can rock the hell out here!</h4>
-            <div className="chat-container" ref={elemRef}>
-                {oldMessages &&
-                    oldMessages.map((message) => (
-                        <div key={message.id}>
-                            <img
-                                className="avatar"
-                                src={message.prof_pic_url}
-                            />
-                            <span>
-                                {message.first_name} {message.last_name}
-                            </span>
-                            <p>{message.msg_text}</p>
+            <div className="chat-wrapper">
+                <div className="outer-chat-container">
+                    <div id="rocker-room">
+                        <h1>Rocker Room</h1>
+                        <h4>You can rock the hell out here!</h4>
+                        <div className="chat-container" ref={elemRef}>
+                            {oldMessages &&
+                                oldMessages.map((message) => (
+                                    <div key={message.id}>
+                                        <img
+                                            className="avatar"
+                                            src={message.prof_pic_url}
+                                        />
+                                        <span>
+                                            {message.first_name}{" "}
+                                            {message.last_name}
+                                        </span>
+                                        <div id="one-message">
+                                            <p id="message-text">
+                                                {message.msg_text}
+                                            </p>
+                                            <p id="message-time">
+                                                {message.created_at}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
                         </div>
-                    ))}
-            </div>
-            <div className="message input">
-                <textarea
-                    id="new-message"
-                    name="new-message"
-                    rows="4"
-                    cols="50"
-                    placeholder="Chat with your rock buddies!"
-                    onKeyDown={handleKey}
-                ></textarea>
+                    </div>
+                    <div className="message input">
+                        <textarea
+                            id="new-message"
+                            name="new-message"
+                            rows="4"
+                            cols="50"
+                            placeholder="Chat with your rock buddies!"
+                            onKeyDown={handleKey}
+                        ></textarea>
+                    </div>
+                </div>
+                <div id="chat-pic">
+                    <img id="long--live-pic" src="long-live-rock.jpg" />
+                </div>
             </div>
         </>
     );

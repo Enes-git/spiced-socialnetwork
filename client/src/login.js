@@ -25,6 +25,26 @@ export default class Login extends React.Component {
             });
     }
 
+    handleKey(e) {
+        if (e.key === "Enter") {
+            // console.log("e.target.value :>> ", e.target.value);
+            e.preventDefault();
+
+            axios
+                .post("/login", this.state)
+                .then(({ data }) => {
+                    if (data.success) {
+                        return location.replace("/");
+                    }
+                    return this.setState({ error: true });
+                })
+                .catch((err) => {
+                    console.log("err in post login route :>> ", err);
+                    this.setState({ error: true });
+                });
+        }
+    }
+
     handleChange(event) {
         this.setState(
             {
@@ -59,6 +79,7 @@ export default class Login extends React.Component {
                     <button
                         className="button"
                         onClick={() => this.handleClick()}
+                        onKeyDown={() => this.handleKey()}
                     >
                         ROCK ON
                     </button>

@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* max-width: 900px; */
+    max-width: 80vw;
     justify-content: space-evenly;
 }
 .header {
@@ -116,9 +116,12 @@ hr {
     display: flex;
     justify-content: space-between;
 }
-.heade-links {
+.header-links {
     display: flex;
     flex-direction: column;
+}
+.header-links > div > a {
+    text-decoration: none;
 }
 #the-x {
     width: 25px;
@@ -140,8 +143,46 @@ hr {
 }
 .chat-container {
     height: 55vh;
-    overflow-y: auto;
+    overflow-y: scroll;
+    padding: 10px;
 }
 .chat-container::-webkit-scrollbar {
     display: none;
+}
+#one-message {
+    display: flex;
+    justify-content: space-between;
+}
+#message-time {
+    display: none;
+    /* text-decoration: ; */
+}
+#message-text:hover + #message-time {
+    display: block;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+}
+#rocker-room {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+.links-and-pic {
+    display: flex;
+}
+.chat-wrapper {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+#long--live-pic {
+    max-width: 60vw;
+}
+#chat-pic {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
