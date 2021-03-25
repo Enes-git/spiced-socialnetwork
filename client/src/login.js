@@ -30,18 +30,7 @@ export default class Login extends React.Component {
             // console.log("e.target.value :>> ", e.target.value);
             e.preventDefault();
 
-            axios
-                .post("/login", this.state)
-                .then(({ data }) => {
-                    if (data.success) {
-                        return location.replace("/");
-                    }
-                    return this.setState({ error: true });
-                })
-                .catch((err) => {
-                    console.log("err in post login route :>> ", err);
-                    this.setState({ error: true });
-                });
+            this.handleClick();
         }
     }
 
@@ -75,11 +64,11 @@ export default class Login extends React.Component {
                         placeholder="password"
                         type="password"
                         onChange={(event) => this.handleChange(event)}
+                        onKeyDown={(e) => this.handleKey(e)}
                     />
                     <button
                         className="button"
                         onClick={() => this.handleClick()}
-                        onKeyDown={() => this.handleKey()}
                     >
                         ROCK ON
                     </button>

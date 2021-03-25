@@ -11,6 +11,7 @@ export default class Registration extends React.Component {
         // 2nd method is arrow fn where we invoke it.(down in the tags!)
         this.state = {
             error: false,
+            delete: false,
         };
     }
 
@@ -35,6 +36,15 @@ export default class Registration extends React.Component {
                     error: true,
                 });
             });
+    }
+
+    handleKey(e) {
+        if (e.key === "Enter") {
+            // console.log("e.target.value :>> ", e.target.value);
+            e.preventDefault();
+
+            this.handleClick();
+        }
     }
 
     handleChange(event) {
@@ -68,6 +78,12 @@ export default class Registration extends React.Component {
                             again &#127928;
                         </p>
                     )}
+                    {this.state.delete && (
+                        <p className="delete error">
+                            &#127928; You have successfully deleted your
+                            account! &#127928;
+                        </p>
+                    )}
                     <input
                         name="firstname"
                         placeholder="firstname"
@@ -88,6 +104,7 @@ export default class Registration extends React.Component {
                         placeholder="password"
                         type="password"
                         onChange={(event) => this.handleChange(event)}
+                        onKeyDown={(e) => this.handleKey(e)}
                     />
                     <button
                         className="button"

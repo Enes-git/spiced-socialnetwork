@@ -41,3 +41,17 @@ module.exports.upload = (req, res, next) => {
             res.sendStatus(500);
         });
 };
+
+// for account deletion
+module.exports.delete = (filename) => {
+    s3.deleteObject(
+        {
+            Bucket: "spicedling",
+            Key: filename,
+        },
+        function (err, data) {
+            if (err) console.log(err);
+            else console.log(data);
+        }
+    );
+};

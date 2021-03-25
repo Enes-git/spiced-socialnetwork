@@ -17,8 +17,6 @@ body {
 .header {
     height: 40vh;
     width: 100%;
-    /* position: relative; */
-    /* display: inline-flex; */
 }
 .header > img {
     height: 50vh;
@@ -51,6 +49,21 @@ input:hover {
     color: cornsilk;
     background-color: black;
     border: none;
+    cursor: pointer;
+}
+#friendship-button {
+    background-color: rgb(14, 22, 20);
+    border: 1px solid rgb(44, 107, 93);
+    border-radius: 8px;
+    padding: 10px 10px;
+    color: rgb(124, 31, 31);
+}
+#friendship-button:hover {
+    background-size: cover;
+    color: cornsilk;
+    background-color: black;
+    border: none;
+    cursor: pointer;
 }
 .error {
     color: brown;
@@ -59,15 +72,28 @@ p > a {
     color: rgb(124, 31, 31);
     text-decoration: none;
 }
-/* .logo {
-    height: 10vh;
-    width: 10vw;
-} */
-#profile-picture {
+#small-pic {
     display: inline-flex;
-    /* justify-content: flex-end; */
     width: 100px;
     height: 100px;
+}
+#small-pic > img {
+    border-radius: 5px;
+}
+#mid-pic {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+#big-pic {
+    display: inline-flex;
+    width: 50vw;
+    height: 50vh;
+    justify-content: space-between;
+}
+#big-pic > img {
+    border-radius: 5px;
 }
 #app-component {
     display: unset;
@@ -75,6 +101,16 @@ p > a {
 #friends-requests {
     display: flex;
     flex-direction: column;
+}
+.friends-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.requests-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .friends {
     display: flex;
@@ -84,6 +120,9 @@ p > a {
     justify-content: center;
 }
 .friends > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 10px;
     height: 40vh;
     width: 20vw;
@@ -100,6 +139,9 @@ p > a {
     justify-content: center;
 }
 .requests > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 10px;
     height: 40vh;
     width: 20vw;
@@ -119,9 +161,18 @@ hr {
 .header-links {
     display: flex;
     flex-direction: column;
+    margin-right: 15px;
+}
+.header-links > div {
+    padding: 2px;
+    margin: 2px;
+    /* border: 0.5px solid rgb(44, 107, 93); */
+    border-radius: 5px;
+    text-align: center;
 }
 .header-links > div > a {
     text-decoration: none;
+    color: rgb(124, 31, 31);
 }
 #the-x {
     width: 25px;
@@ -160,6 +211,10 @@ hr {
 #message-text:hover + #message-time {
     display: block;
 }
+#message-time {
+    font-size: x-small;
+    font-style: italic;
+}
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -185,4 +240,31 @@ hr {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+}
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.outer-chat-container {
+    padding: 5px;
+    margin-right: 25px;
+}
+#bio-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+#editor-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#editor-container > div {
+    margin: 10px;
+}
+.bioEditor {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
 }

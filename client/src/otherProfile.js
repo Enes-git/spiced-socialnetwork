@@ -38,8 +38,8 @@ export default class OtherProfile extends Component {
     }
     render() {
         return (
-            <div>
-                <div>
+            <div className="profile-container">
+                <div id="big-pic">
                     <img src={this.state.prof_pic_url} />
                 </div>
                 <div>

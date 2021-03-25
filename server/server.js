@@ -79,6 +79,27 @@ app.use(express.json());
 
 // ============================
 //   ======= ROUTES ==========
+app.get("/delete_account", (req, res) => {
+    Promise.all([
+        db.deleteChat(req.session.userId),
+        db.cancelFriendship(req.session.userId),
+    ])
+        .then(() => {
+            db.deleteUser(req.session.userId)
+                .then(() => {
+                    req.session = null;
+                    res.redirect("/");
+                })
+                .catch((err) => {
+                    console.log("err in deleteUser :>> ", err);
+                });
+        })
+        .catch((err) => {
+            console.log("err in account deletion :>> ", err);
+            res.json({ success: false });
+        });
+    // db.deleteResetCode(req.session.userId).then().catch();
+});
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/welcome#/login");
@@ -251,14 +272,16 @@ app.post("/updateBio", (req, res) => {
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("hit the post route....");
-    console.log("req.file :>> ", req.file);
+    // console.log("req.file :>> ", req.file);
+    const oldProfilePic = req._parsedUrl.query;
+    console.log("oldProfilePic :>> ", oldProfilePic);
 
     const { filename } = req.file;
     let url = s3Url + filename;
 
     db.addProfilePic(url, req.session.userId)
         .then((result) => {
-            console.log("result from db.addProfPic :>> ", result);
+            // console.log("result from db.addProfPic :>> ", result);
             res.json(result.rows);
         })
         .catch((err) => {
@@ -441,10 +464,12 @@ app.get("*", function (req, res) {
     }
 });
 
+// server
 server.listen(process.env.PORT || 3001, function () {
     console.log("Listen, I will!");
 });
 
+// chat room
 io.on("connection", (socket) => {
     console.log("socket.id is on :>> ", socket.id);
     if (!socket.request.session.userId) {

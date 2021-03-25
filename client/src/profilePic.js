@@ -4,15 +4,16 @@ export default function ProfilePic({
     lastname,
     prof_pic_url,
     toggleUploader,
+    imgId,
 }) {
     // console.log("props in prf pic :>> ", props);
     prof_pic_url = prof_pic_url || "default.png";
     return (
         <>
-            <div id="profile-picture">
-                <p>
+            <div id={imgId}>
+                {/* <p>
                     {firstname} {lastname}
-                </p>
+                </p> */}
                 <img
                     src={prof_pic_url}
                     alt={firstname && lastname}

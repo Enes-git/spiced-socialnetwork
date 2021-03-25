@@ -46,6 +46,24 @@ export default class BioEditor extends Component {
             })
             .catch((err) => console.log("err in axios /updateBio :>> ", err));
     }
+    handleKey(e) {
+        if (e.key === "Enter") {
+            // console.log("e.target.value :>> ", e.target.value);
+            e.preventDefault();
+
+            this.handleClick();
+        }
+    }
+    deleteAccount() {
+        axios
+            .get("/delete_account")
+            .then(() => {
+                return;
+            })
+            .catch((err) =>
+                console.log("err in axios /delete_account :>> ", err)
+            );
+    }
     toggleEditMod() {
         this.setState({
             editModOn: !this.state.editModOn,
@@ -62,28 +80,45 @@ export default class BioEditor extends Component {
                         {this.props.first_name} {this.props.last_name}
                     </h1>
                     <p>{this.props.bio}</p>
-                    <button
-                        className="button"
-                        onClick={() => this.toggleEditMod()}
-                    >
-                        {this.state.buttonText}
-                    </button>
+                    <div id="bio-buttons">
+                        <button
+                            className="button"
+                            onClick={() => this.toggleEditMod()}
+                        >
+                            {this.state.buttonText}
+                        </button>
+                        <button
+                            className="button"
+                            onClick={() => this.deleteAccount()}
+                        >
+                            Delete Account
+                        </button>
+                    </div>
                 </>
             );
         } else {
             return (
                 <>
-                    <textarea
-                        defaultValue={this.props.bio}
-                        onChange={(event) => this.handleChange(event)}
-                        enabled="true"
-                    />
-                    <button
-                        className="button"
-                        onClick={() => this.handleClick()}
-                    >
-                        SAVE
-                    </button>
+                    <div id="editor-container">
+                        <div>
+                            <textarea
+                                rows="4"
+                                cols="50"
+                                defaultValue={this.props.bio}
+                                onChange={(event) => this.handleChange(event)}
+                                onKeyDown={(e) => this.handleKey(e)}
+                                enabled="true"
+                            />
+                        </div>
+                        <div>
+                            <button
+                                className="button"
+                                onClick={() => this.handleClick()}
+                            >
+                                SAVE
+                            </button>
+                        </div>
+                    </div>
                 </>
             );
         }

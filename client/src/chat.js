@@ -50,7 +50,7 @@ export default function Chat() {
                         <div className="chat-container" ref={elemRef}>
                             {oldMessages &&
                                 oldMessages.map((message) => (
-                                    <div key={message.id}>
+                                    <div key={message.id} id="chatter">
                                         <img
                                             className="avatar"
                                             src={message.prof_pic_url}

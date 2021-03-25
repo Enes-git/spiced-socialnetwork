@@ -208,4 +208,42 @@ module.exports.getLastMessage = (sender_id) => {
     return db.query(q, params);
 };
 
+// =============== DELETE ACCOUNT ====================
+// delete chat
+module.exports.deleteChat = (id) => {
+    const q = `
+    DELETE FROM messages
+    WHERE sender_id = $1`;
+    const params = [id];
+    return db.query(q, params);
+};
+
+// delete friends
+module.exports.deleteFriends = (id) => {
+    const q = `
+    DELETE FROM friendships
+    WHERE recipient_id = $1
+    OR sender_id = $1`;
+    const params = [id];
+    return db.query(q, params);
+};
+
+// delete codes
+// module.exports.deleteResetCode = (id) => {
+//     const q = `
+//     DELETE FROM messages
+//     WHERE (sender_id = $1)`;
+//     const params = [id];
+//     return db.query(q, params);
+// };
+
+// delete user
+module.exports.deleteUser = (id) => {
+    const q = `
+    DELETE FROM users
+    WHERE id = $1`;
+    const params = [id];
+    return db.query(q, params);
+};
+
 // AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes;' PROBLEMATIC LINE!!!

@@ -78,10 +78,13 @@ export default class App extends Component {
                         <div className="links-and-pic">
                             <div className="header-links">
                                 <div>
-                                    <Link to="/">My Profile</Link>
+                                    <Link to="/">Profile</Link>
                                 </div>
                                 <div>
-                                    <Link to="/chat">Rocker Room</Link>
+                                    <Link to="/friendslist">Buddies</Link>
+                                </div>
+                                <div>
+                                    <Link to="/chat">The Room</Link>
                                 </div>
                                 <div>
                                     <a href="/logout">Logout</a>
@@ -90,6 +93,8 @@ export default class App extends Component {
                             <div id="prof-pic">
                                 <ProfilePic
                                     prof_pic_url={this.state.prof_pic_url}
+                                    toggleUploader={this.toggleUploader}
+                                    imgId="small-pic"
                                 />
                             </div>
                         </div>
