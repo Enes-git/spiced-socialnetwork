@@ -34,7 +34,7 @@ export default function Chat() {
         // );
         // console.log(
         //     "elemRef.current.height :>> ",
-        //     elemRef.current.cleintHeight
+        //     elemRef.current.clientHeight
         // );
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;

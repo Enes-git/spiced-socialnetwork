@@ -16,7 +16,7 @@ export default function FriendshipButton({ otherUser }) {
                 setButtonText(response.data.buttonText);
             })
             .catch((err) =>
-                console.log("err in exios post/change-friendship :>> ", err)
+                console.log("err in axios post/change-friendship :>> ", err)
             );
     };
 
